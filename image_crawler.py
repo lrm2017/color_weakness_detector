@@ -20,6 +20,16 @@ BASE_URL = "https://www.seruoxiangji.com"
 PAGES = [
     {"url": "index.php?g=Home&m=Index&a=pinfo&id=1", "name": "yuziping6"},
     {"url": "index.php?g=Home&m=Index&a=pinfo&id=4", "name": "yuziping5"},
+    {"url": "index.php?g=Home&m=Index&a=pinfo&id=5", "name": "set_id5"},
+    {"url": "index.php?g=Home&m=Index&a=pinfo&id=6", "name": "set_id6"},
+    {"url": "index.php?g=Home&m=Index&a=pinfo&id=7", "name": "set_id7"},
+    {"url": "index.php?g=Home&m=Index&a=pinfo&id=8", "name": "set_id8"},
+    {"url": "index.php?g=Home&m=Index&a=pinfo&id=9", "name": "set_id9"},
+    {"url": "index.php?g=Home&m=Index&a=pinfo&id=10", "name": "set_id10"},
+    {"url": "index.php?g=Home&m=Index&a=pinfo&id=11", "name": "set_id11"},
+    {"url": "index.php?g=Home&m=Index&a=pinfo&id=12", "name": "set_id12"},
+    {"url": "index.php?g=Home&m=Index&a=pinfo&id=13", "name": "set_id13"},
+    {"url": "index.php?g=Home&m=Index&a=pinfo&id=14", "name": "set_id14"},
 ]
 
 HEADERS = {

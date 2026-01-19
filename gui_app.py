@@ -7,6 +7,7 @@
 import json
 import sys
 import random
+import shutil
 from pathlib import Path
 
 import cv2
@@ -14,38 +15,43 @@ import numpy as np
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QLabel, QFileDialog, QComboBox, QGroupBox,
-    QScrollArea, QSplitter, QStatusBar, QLineEdit, QMessageBox
+    QScrollArea, QSplitter, QStatusBar, QLineEdit, QMessageBox,
+    QRadioButton, QButtonGroup
 )
-from PySide6.QtCore import Qt, QSize
+from PySide6.QtCore import Qt, QSize, QStandardPaths
 from PySide6.QtGui import QPixmap, QImage, QFont
 
 
 # 支持的图片格式
 IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.bmp', '.gif', '.webp', '.tiff', '.tif'}
 
+# 程序目录
+APP_DIR = Path(__file__).parent.resolve()
+IMAGES_DIR = APP_DIR / "downloaded_images"
+WRONG_ANSWERS_DIR = IMAGES_DIR / "错题库"
+
+# 配置文件路径
+CONFIG_DIR = Path(QStandardPaths.writableLocation(QStandardPaths.AppConfigLocation)) / "color_weakness_detector"
+CONFIG_FILE = CONFIG_DIR / "config.json"
+
 
 class ColorDetector:
-    """颜色检测器基类"""
+    """颜色检测器"""
     
     @staticmethod
     def get_warm_mask(hsv_image):
-        """获取暖色掩码（红、橙、黄）"""
-        # 红色范围1 (0-10)
         lower_red1 = np.array([0, 70, 50])
         upper_red1 = np.array([10, 255, 255])
         mask_red1 = cv2.inRange(hsv_image, lower_red1, upper_red1)
         
-        # 红色范围2 (160-180)
         lower_red2 = np.array([160, 70, 50])
         upper_red2 = np.array([180, 255, 255])
         mask_red2 = cv2.inRange(hsv_image, lower_red2, upper_red2)
         
-        # 橙色范围 (10-25)
         lower_orange = np.array([10, 70, 50])
         upper_orange = np.array([25, 255, 255])
         mask_orange = cv2.inRange(hsv_image, lower_orange, upper_orange)
         
-        # 黄色范围 (25-40)
         lower_yellow = np.array([25, 70, 50])
         upper_yellow = np.array([40, 255, 255])
         mask_yellow = cv2.inRange(hsv_image, lower_yellow, upper_yellow)
@@ -54,23 +60,18 @@ class ColorDetector:
 
     @staticmethod
     def get_cool_mask(hsv_image):
-        """获取冷色掩码（绿、青、蓝、紫）"""
-        # 绿色范围 (40-80)
         lower_green = np.array([40, 70, 50])
         upper_green = np.array([80, 255, 255])
         mask_green = cv2.inRange(hsv_image, lower_green, upper_green)
         
-        # 青色范围 (80-100)
         lower_cyan = np.array([80, 70, 50])
         upper_cyan = np.array([100, 255, 255])
         mask_cyan = cv2.inRange(hsv_image, lower_cyan, upper_cyan)
         
-        # 蓝色范围 (100-130)
         lower_blue = np.array([100, 70, 50])
         upper_blue = np.array([130, 255, 255])
         mask_blue = cv2.inRange(hsv_image, lower_blue, upper_blue)
         
-        # 紫色范围 (130-160)
         lower_purple = np.array([130, 70, 50])
         upper_purple = np.array([160, 255, 255])
         mask_purple = cv2.inRange(hsv_image, lower_purple, upper_purple)
@@ -79,7 +80,6 @@ class ColorDetector:
 
     @staticmethod
     def find_and_draw_contours(image, mask, color, min_area=100):
-        """在图像上找到并绘制轮廓"""
         kernel = np.ones((5, 5), np.uint8)
         mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
         mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
@@ -101,10 +101,6 @@ class ColorDetector:
 
     @classmethod
     def detect_warm_cool(cls, image, min_area=100):
-        """
-        冷暖色识别
-        返回: (结果图像, 统计信息字典)
-        """
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         
         warm_mask = cls.get_warm_mask(hsv)
@@ -115,14 +111,7 @@ class ColorDetector:
         
         total_colored = warm_pixels + cool_pixels
         if total_colored == 0:
-            return image.copy(), {
-                'warm_pixels': 0,
-                'cool_pixels': 0,
-                'warm_ratio': 0,
-                'cool_ratio': 0,
-                'blocks_found': 0,
-                'message': '未检测到明显的暖色或冷色区域'
-            }
+            return image.copy(), {'message': '未检测到明显的暖色或冷色区域'}
         
         warm_ratio = warm_pixels / total_colored * 100
         cool_ratio = cool_pixels / total_colored * 100
@@ -135,11 +124,7 @@ class ColorDetector:
             message = f'冷色居多，已圈出 {count} 个暖色块（红框）'
         
         return result, {
-            'warm_pixels': warm_pixels,
-            'cool_pixels': cool_pixels,
-            'warm_ratio': warm_ratio,
-            'cool_ratio': cool_ratio,
-            'blocks_found': count,
+            'warm_ratio': warm_ratio, 'cool_ratio': cool_ratio,
             'message': message
         }
 
@@ -176,16 +161,24 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("色弱图谱识别程序")
-        self.setMinimumSize(1000, 750)
+        self.setMinimumSize(1000, 800)
         
         self.image_list = []
         self.current_index = -1
-        self.current_image = None  # BGR格式的OpenCV图像
-        self.answers_data = {}  # 答案数据 {filename: answer}
-        self.answer_visible = False  # 答案是否可见
+        self.current_image = None
+        self.current_image_path = None
+        self.answers_data = {}
+        self.answer_visible = False
+        
+        # 练习模式统计
+        self.correct_count = 0
+        self.wrong_count = 0
+        self.practice_mode = False  # 是否处于练习模式
         
         self._setup_ui()
         self._connect_signals()
+        self._load_gallery_list()
+        self._load_config()
     
     def _setup_ui(self):
         """设置UI"""
@@ -195,32 +188,52 @@ class MainWindow(QMainWindow):
         main_layout = QVBoxLayout(central_widget)
         
         # === 顶部控制区 ===
-        top_group = QGroupBox("图库设置")
+        top_group = QGroupBox("图库选择")
         top_layout = QHBoxLayout(top_group)
         
-        top_layout.addWidget(QLabel("图库路径:"))
-        self.path_edit = QLineEdit()
-        self.path_edit.setReadOnly(True)
-        self.path_edit.setPlaceholderText("请选择图库目录...")
-        top_layout.addWidget(self.path_edit, 1)
+        top_layout.addWidget(QLabel("选择图库:"))
+        self.gallery_combo = QComboBox()
+        self.gallery_combo.setMinimumWidth(200)
+        top_layout.addWidget(self.gallery_combo)
         
-        self.browse_btn = QPushButton("浏览...")
-        top_layout.addWidget(self.browse_btn)
+        top_layout.addSpacing(20)
+        
+        # 练习模式选择
+        top_layout.addWidget(QLabel("练习模式:"))
+        self.mode_group = QButtonGroup(self)
+        self.mode_sequential = QRadioButton("顺序")
+        self.mode_random = QRadioButton("随机")
+        self.mode_sequential.setChecked(True)
+        self.mode_group.addButton(self.mode_sequential, 0)
+        self.mode_group.addButton(self.mode_random, 1)
+        top_layout.addWidget(self.mode_sequential)
+        top_layout.addWidget(self.mode_random)
+        
+        top_layout.addSpacing(20)
+        
+        # 统计显示
+        self.stats_label = QLabel("正确: 0 | 错误: 0")
+        self.stats_label.setStyleSheet("QLabel { font-weight: bold; color: #333; }")
+        top_layout.addWidget(self.stats_label)
+        
+        self.reset_stats_btn = QPushButton("重置统计")
+        self.reset_stats_btn.clicked.connect(self._reset_stats)
+        top_layout.addWidget(self.reset_stats_btn)
+        
+        top_layout.addStretch()
         
         main_layout.addWidget(top_group)
         
         # === 中间图像显示区 ===
         splitter = QSplitter(Qt.Horizontal)
         
-        # 原图显示
         left_group = QGroupBox("原图")
         left_layout = QVBoxLayout(left_group)
         self.original_label = ImageLabel()
-        self.original_label.setText("请选择图库并加载图片")
+        self.original_label.setText("请选择图库")
         left_layout.addWidget(self.original_label)
         splitter.addWidget(left_group)
         
-        # 识别结果显示
         right_group = QGroupBox("识别结果")
         right_layout = QVBoxLayout(right_group)
         self.result_label = ImageLabel()
@@ -231,18 +244,46 @@ class MainWindow(QMainWindow):
         splitter.setSizes([500, 500])
         main_layout.addWidget(splitter, 1)
         
-        # === 答案显示区 ===
+        # === 答案输入区 ===
         answer_group = QGroupBox("答案")
         answer_layout = QHBoxLayout(answer_group)
         
+        # 答案输入框
+        answer_layout.addWidget(QLabel("输入答案:"))
+        self.answer_input = QLineEdit()
+        self.answer_input.setPlaceholderText("输入你的答案后按回车或点击提交...")
+        self.answer_input.setMinimumWidth(150)
+        input_font = QFont()
+        input_font.setPointSize(14)
+        self.answer_input.setFont(input_font)
+        answer_layout.addWidget(self.answer_input)
+        
+        self.submit_btn = QPushButton("提交答案")
+        self.submit_btn.setMinimumWidth(100)
+        self.submit_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #4CAF50;
+                color: white;
+                font-weight: bold;
+                padding: 8px 16px;
+                border-radius: 4px;
+            }
+            QPushButton:hover { background-color: #45a049; }
+        """)
+        answer_layout.addWidget(self.submit_btn)
+        
+        answer_layout.addSpacing(20)
+        
+        # 答案显示
         self.answer_label = QLabel("???")
         self.answer_label.setAlignment(Qt.AlignCenter)
         answer_font = QFont()
-        answer_font.setPointSize(24)
+        answer_font.setPointSize(20)
         answer_font.setBold(True)
         self.answer_label.setFont(answer_font)
         self.answer_label.setStyleSheet("QLabel { color: #333; padding: 10px; }")
-        answer_layout.addWidget(self.answer_label, 1)
+        self.answer_label.setMinimumWidth(150)
+        answer_layout.addWidget(self.answer_label)
         
         self.show_answer_btn = QPushButton("显示答案")
         self.show_answer_btn.setMinimumWidth(100)
@@ -254,11 +295,24 @@ class MainWindow(QMainWindow):
                 padding: 8px 16px;
                 border-radius: 4px;
             }
-            QPushButton:hover {
-                background-color: #1976D2;
-            }
+            QPushButton:hover { background-color: #1976D2; }
         """)
         answer_layout.addWidget(self.show_answer_btn)
+        
+        self.add_wrong_btn = QPushButton("加入错题库")
+        self.add_wrong_btn.setMinimumWidth(100)
+        self.add_wrong_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #f44336;
+                color: white;
+                font-weight: bold;
+                padding: 8px 16px;
+                border-radius: 4px;
+            }
+            QPushButton:hover { background-color: #d32f2f; }
+            QPushButton:disabled { background-color: #cccccc; }
+        """)
+        answer_layout.addWidget(self.add_wrong_btn)
         
         main_layout.addWidget(answer_group)
         
@@ -266,11 +320,10 @@ class MainWindow(QMainWindow):
         bottom_group = QGroupBox("控制面板")
         bottom_layout = QHBoxLayout(bottom_group)
         
-        # 图片导航
         nav_layout = QHBoxLayout()
         self.prev_btn = QPushButton("上一张")
         self.next_btn = QPushButton("下一张")
-        self.random_btn = QPushButton("随机")
+        self.random_btn = QPushButton("随机跳转")
         self.image_info_label = QLabel("0 / 0")
         
         nav_layout.addWidget(self.prev_btn)
@@ -281,7 +334,6 @@ class MainWindow(QMainWindow):
         
         bottom_layout.addSpacing(30)
         
-        # 识别方法选择
         method_layout = QHBoxLayout()
         method_layout.addWidget(QLabel("识别方法:"))
         self.method_combo = QComboBox()
@@ -292,23 +344,18 @@ class MainWindow(QMainWindow):
         
         bottom_layout.addSpacing(20)
         
-        # 识别按钮
         self.detect_btn = QPushButton("开始识别")
         self.detect_btn.setMinimumWidth(120)
         self.detect_btn.setStyleSheet("""
             QPushButton {
-                background-color: #4CAF50;
+                background-color: #9C27B0;
                 color: white;
                 font-weight: bold;
                 padding: 8px 16px;
                 border-radius: 4px;
             }
-            QPushButton:hover {
-                background-color: #45a049;
-            }
-            QPushButton:disabled {
-                background-color: #cccccc;
-            }
+            QPushButton:hover { background-color: #7B1FA2; }
+            QPushButton:disabled { background-color: #cccccc; }
         """)
         bottom_layout.addWidget(self.detect_btn)
         
@@ -319,27 +366,150 @@ class MainWindow(QMainWindow):
         # === 状态栏 ===
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
-        self.status_bar.showMessage("就绪")
+        self.status_bar.showMessage("就绪 - 输入答案后按回车提交")
         
-        # 初始状态禁用按钮
         self._update_button_states()
     
     def _connect_signals(self):
         """连接信号"""
-        self.browse_btn.clicked.connect(self._browse_folder)
+        self.gallery_combo.currentIndexChanged.connect(self._on_gallery_changed)
         self.prev_btn.clicked.connect(self._prev_image)
         self.next_btn.clicked.connect(self._next_image)
         self.random_btn.clicked.connect(self._random_image)
         self.detect_btn.clicked.connect(self._detect)
         self.show_answer_btn.clicked.connect(self._toggle_answer)
+        self.add_wrong_btn.clicked.connect(self._add_to_wrong_answers)
+        self.submit_btn.clicked.connect(self._submit_answer)
+        self.answer_input.returnPressed.connect(self._submit_answer)
     
-    def _browse_folder(self):
-        """浏览文件夹"""
-        folder = QFileDialog.getExistingDirectory(
-            self, "选择图库目录", str(Path.home())
-        )
+    def _submit_answer(self):
+        """提交答案"""
+        if self.current_image_path is None:
+            return
+        
+        user_answer = self.answer_input.text().strip()
+        if not user_answer:
+            self.status_bar.showMessage("请输入答案")
+            return
+        
+        filename = self.current_image_path.name
+        correct_answer = self.answers_data.get(filename, "")
+        
+        if not correct_answer:
+            self.status_bar.showMessage("该题目没有标准答案")
+            return
+        
+        # 比较答案（忽略大小写和空格）
+        user_clean = user_answer.lower().replace(" ", "")
+        correct_clean = correct_answer.lower().replace(" ", "")
+        
+        if user_clean == correct_clean:
+            # 答案正确
+            self.correct_count += 1
+            self._update_stats()
+            self.answer_label.setText(correct_answer)
+            self.answer_label.setStyleSheet("QLabel { color: #4CAF50; padding: 10px; }")
+            self.status_bar.showMessage("回答正确!")
+            self.answer_input.clear()
+            
+            # 自动跳转到下一张
+            if self.mode_random.isChecked():
+                # 随机模式
+                self._random_image()
+            else:
+                # 顺序模式
+                if self.current_index < len(self.image_list) - 1:
+                    self.current_index += 1
+                    self._load_current_image()
+                else:
+                    self.status_bar.showMessage("恭喜! 已完成所有题目!")
+        else:
+            # 答案错误
+            self.wrong_count += 1
+            self._update_stats()
+            self.answer_label.setText(f"错! 正确: {correct_answer}")
+            self.answer_label.setStyleSheet("QLabel { color: #f44336; padding: 10px; }")
+            self.status_bar.showMessage(f"回答错误! 正确答案是: {correct_answer}")
+            
+            # 自动加入错题库
+            self._add_to_wrong_answers(silent=True)
+            self.answer_input.clear()
+    
+    def _reset_stats(self):
+        """重置统计"""
+        self.correct_count = 0
+        self.wrong_count = 0
+        self._update_stats()
+        self.status_bar.showMessage("统计已重置")
+    
+    def _update_stats(self):
+        """更新统计显示"""
+        total = self.correct_count + self.wrong_count
+        if total > 0:
+            accuracy = self.correct_count / total * 100
+            self.stats_label.setText(
+                f"正确: {self.correct_count} | 错误: {self.wrong_count} | 正确率: {accuracy:.1f}%"
+            )
+        else:
+            self.stats_label.setText("正确: 0 | 错误: 0")
+    
+    def _load_gallery_list(self):
+        """加载图库列表"""
+        self.gallery_combo.clear()
+        self.gallery_combo.addItem("-- 请选择图库 --", "")
+        
+        if IMAGES_DIR.exists():
+            WRONG_ANSWERS_DIR.mkdir(exist_ok=True)
+            
+            dirs = sorted([
+                d for d in IMAGES_DIR.iterdir()
+                if d.is_dir() and d.name != "backup_original"
+            ])
+            
+            for d in dirs:
+                if d.name == "错题库":
+                    count = len(list(d.glob("*.jpg")) + list(d.glob("*.png")))
+                    self.gallery_combo.addItem(f"错题库 ({count}题)", str(d))
+                    break
+            
+            for d in dirs:
+                if d.name != "错题库":
+                    count = len([f for f in d.iterdir() 
+                               if f.is_file() and f.suffix.lower() in IMAGE_EXTENSIONS])
+                    self.gallery_combo.addItem(f"{d.name} ({count}张)", str(d))
+    
+    def _on_gallery_changed(self, index):
+        """图库选择变化"""
+        folder = self.gallery_combo.currentData()
         if folder:
             self._load_folder(folder)
+            self._save_config()
+            self._reset_stats()  # 切换图库时重置统计
+    
+    def _load_config(self):
+        """加载配置"""
+        if CONFIG_FILE.exists():
+            try:
+                with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                    config = json.load(f)
+                last_gallery = config.get('last_gallery', '')
+                if last_gallery:
+                    for i in range(self.gallery_combo.count()):
+                        if self.gallery_combo.itemData(i) == last_gallery:
+                            self.gallery_combo.setCurrentIndex(i)
+                            break
+            except Exception as e:
+                print(f"加载配置失败: {e}")
+    
+    def _save_config(self):
+        """保存配置"""
+        try:
+            CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+            config = {'last_gallery': self.gallery_combo.currentData() or ''}
+            with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
+                json.dump(config, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            print(f"保存配置失败: {e}")
     
     def _load_folder(self, folder_path):
         """加载文件夹中的图片"""
@@ -349,18 +519,16 @@ class MainWindow(QMainWindow):
             if f.is_file() and f.suffix.lower() in IMAGE_EXTENSIONS
         ])
         
-        self.path_edit.setText(folder_path)
-        
-        # 加载答案数据
         self._load_answers(folder)
         
         if self.image_list:
             self.current_index = 0
             self._load_current_image()
-            self.status_bar.showMessage(f"已加载 {len(self.image_list)} 张图片")
+            self.status_bar.showMessage(f"已加载 {len(self.image_list)} 张图片 - 输入答案后按回车提交")
         else:
             self.current_index = -1
             self.current_image = None
+            self.current_image_path = None
             self.original_label.clear()
             self.original_label.setText("该目录下没有图片")
             self.result_label.clear()
@@ -383,7 +551,6 @@ class MainWindow(QMainWindow):
                     answer = item.get('answer', '')
                     if filename and answer:
                         self.answers_data[filename] = answer
-                self.status_bar.showMessage(f"已加载 {len(self.answers_data)} 个答案")
             except Exception as e:
                 print(f"加载答案失败: {e}")
     
@@ -391,27 +558,26 @@ class MainWindow(QMainWindow):
         """加载当前图片"""
         if 0 <= self.current_index < len(self.image_list):
             image_path = self.image_list[self.current_index]
+            self.current_image_path = image_path
             
-            # 使用OpenCV读取图片
             self.current_image = cv2.imread(str(image_path))
             
             if self.current_image is not None:
-                # 转换为QPixmap显示
                 pixmap = self._cv2_to_pixmap(self.current_image)
                 self.original_label.setImage(pixmap)
                 
-                # 清除之前的识别结果
                 self.result_label.clear()
                 self.result_label.setText("点击\"开始识别\"查看结果")
                 
                 # 重置答案显示
                 self.answer_visible = False
-                self._update_answer_display()
+                self.answer_label.setText("???")
+                self.answer_label.setStyleSheet("QLabel { color: #333; padding: 10px; }")
+                self.show_answer_btn.setText("显示答案")
                 
-                self.status_bar.showMessage(f"已加载: {image_path.name}")
-            else:
-                self.original_label.setText(f"无法加载图片: {image_path.name}")
-                self.status_bar.showMessage(f"加载失败: {image_path.name}")
+                # 清空输入框并聚焦
+                self.answer_input.clear()
+                self.answer_input.setFocus()
         
         self._update_button_states()
     
@@ -438,7 +604,6 @@ class MainWindow(QMainWindow):
     def _random_image(self):
         """随机切换图片"""
         if len(self.image_list) > 1:
-            # 确保不会选到当前图片
             new_index = self.current_index
             while new_index == self.current_index:
                 new_index = random.randint(0, len(self.image_list) - 1)
@@ -455,27 +620,15 @@ class MainWindow(QMainWindow):
         
         if method == "warm_cool":
             result_image, stats = ColorDetector.detect_warm_cool(self.current_image)
-            
-            # 显示结果
             pixmap = self._cv2_to_pixmap(result_image)
             self.result_label.setImage(pixmap)
-            
-            # 更新状态栏
-            self.status_bar.showMessage(
-                f"暖色: {stats['warm_ratio']:.1f}% | "
-                f"冷色: {stats['cool_ratio']:.1f}% | "
-                f"{stats['message']}"
-            )
+            self.status_bar.showMessage(stats['message'])
     
     def _toggle_answer(self):
         """切换答案显示"""
         self.answer_visible = not self.answer_visible
-        self._update_answer_display()
-    
-    def _update_answer_display(self):
-        """更新答案显示"""
+        
         if self.answer_visible:
-            # 显示答案
             if 0 <= self.current_index < len(self.image_list):
                 filename = self.image_list[self.current_index].name
                 answer = self.answers_data.get(filename, "")
@@ -487,10 +640,72 @@ class MainWindow(QMainWindow):
                     self.answer_label.setStyleSheet("QLabel { color: #999; padding: 10px; }")
             self.show_answer_btn.setText("隐藏答案")
         else:
-            # 隐藏答案
             self.answer_label.setText("???")
             self.answer_label.setStyleSheet("QLabel { color: #333; padding: 10px; }")
             self.show_answer_btn.setText("显示答案")
+    
+    def _add_to_wrong_answers(self, silent=False):
+        """加入错题库"""
+        if self.current_image_path is None:
+            return
+        
+        WRONG_ANSWERS_DIR.mkdir(exist_ok=True)
+        
+        src_path = self.current_image_path
+        src_dir_name = src_path.parent.name
+        
+        # 如果已经在错题库中，跳过
+        if src_dir_name == "错题库":
+            if not silent:
+                self.status_bar.showMessage("已在错题库中")
+            return
+        
+        new_filename = f"{src_dir_name}_{src_path.name}"
+        dst_path = WRONG_ANSWERS_DIR / new_filename
+        
+        if dst_path.exists():
+            if not silent:
+                self.status_bar.showMessage("该题目已在错题库中")
+            return
+        
+        try:
+            shutil.copy2(src_path, dst_path)
+            
+            filename = src_path.name
+            answer = self.answers_data.get(filename, "")
+            if answer:
+                wrong_answers_file = WRONG_ANSWERS_DIR / 'answers.json'
+                wrong_data = []
+                if wrong_answers_file.exists():
+                    with open(wrong_answers_file, 'r', encoding='utf-8') as f:
+                        wrong_data = json.load(f)
+                
+                wrong_data.append({
+                    'filename': new_filename,
+                    'original_url': '',
+                    'answer': answer,
+                    'source': src_dir_name
+                })
+                
+                with open(wrong_answers_file, 'w', encoding='utf-8') as f:
+                    json.dump(wrong_data, f, ensure_ascii=False, indent=2)
+            
+            # 刷新图库列表（阻止信号触发以避免重置统计）
+            current_gallery = self.gallery_combo.currentData()
+            self.gallery_combo.blockSignals(True)
+            self._load_gallery_list()
+            for i in range(self.gallery_combo.count()):
+                if self.gallery_combo.itemData(i) == current_gallery:
+                    self.gallery_combo.setCurrentIndex(i)
+                    break
+            self.gallery_combo.blockSignals(False)
+            
+            if not silent:
+                self.status_bar.showMessage(f"已加入错题库: {new_filename}")
+            
+        except Exception as e:
+            if not silent:
+                QMessageBox.warning(self, "错误", f"加入错题库失败: {e}")
     
     def _update_button_states(self):
         """更新按钮状态"""
@@ -501,8 +716,12 @@ class MainWindow(QMainWindow):
         self.next_btn.setEnabled(self.current_index < len(self.image_list) - 1)
         self.random_btn.setEnabled(len(self.image_list) > 1)
         self.detect_btn.setEnabled(has_current)
+        self.submit_btn.setEnabled(has_current)
         
-        # 更新图片计数
+        current_gallery = self.gallery_combo.currentData()
+        is_wrong_answers = current_gallery and "错题库" in current_gallery
+        self.add_wrong_btn.setEnabled(has_current and not is_wrong_answers)
+        
         if has_images:
             self.image_info_label.setText(f"{self.current_index + 1} / {len(self.image_list)}")
         else:
@@ -511,8 +730,6 @@ class MainWindow(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    
-    # 设置应用样式
     app.setStyle("Fusion")
     
     window = MainWindow()
