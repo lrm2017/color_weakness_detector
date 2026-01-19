@@ -8,6 +8,7 @@ import json
 import sys
 import random
 import shutil
+import os
 from pathlib import Path
 
 import cv2
@@ -20,6 +21,11 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt, QSize, QStandardPaths
 from PySide6.QtGui import QPixmap, QImage, QFont
+
+# 设置输入法环境变量（在导入Qt之后设置）
+os.environ.setdefault('QT_IM_MODULE', 'fcitx')  # 使用fcitx而不是fcitx5
+os.environ.setdefault('XMODIFIERS', '@im=fcitx')
+os.environ.setdefault('GTK_IM_MODULE', 'fcitx')
 
 
 # 支持的图片格式
@@ -171,6 +177,9 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("色弱图谱识别程序")
         self.setMinimumSize(1000, 800)
         
+        # 启用输入法支持
+        self.setAttribute(Qt.WA_InputMethodEnabled, True)
+        
         self.image_list = []
         self.current_index = -1
         self.current_image = None
@@ -214,6 +223,7 @@ class MainWindow(QMainWindow):
         self.mode_sequential.setChecked(True)
         self.mode_group.addButton(self.mode_sequential, 0)
         self.mode_group.addButton(self.mode_random, 1)
+        self.mode_group.buttonClicked.connect(self._on_mode_changed)
         top_layout.addWidget(self.mode_sequential)
         top_layout.addWidget(self.mode_random)
         
@@ -254,17 +264,64 @@ class MainWindow(QMainWindow):
         
         # === 答案输入区 ===
         answer_group = QGroupBox("答案")
-        answer_layout = QHBoxLayout(answer_group)
+        answer_layout = QVBoxLayout(answer_group)
+        
+        # 图形符号快捷面板
+        symbols_layout = QHBoxLayout()
+        symbols_layout.addWidget(QLabel("常用符号:"))
+        
+        # 定义常用符号
+        symbols = ["○", "△", "□", "▽", "✩", "◇", "◆", "●", "▲", "■"]
+        self.symbol_buttons = []
+        
+        for symbol in symbols:
+            btn = QPushButton(symbol)
+            btn.setFixedSize(35, 35)
+            btn.setStyleSheet("""
+                QPushButton {
+                    font-size: 16px;
+                    font-weight: bold;
+                    background-color: #f0f0f0;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                }
+                QPushButton:hover {
+                    background-color: #e0e0e0;
+                }
+                QPushButton:pressed {
+                    background-color: #d0d0d0;
+                }
+            """)
+            btn.clicked.connect(lambda checked, s=symbol: self._insert_symbol(s))
+            btn.setToolTip(f"点击插入符号: {symbol}")
+            symbols_layout.addWidget(btn)
+            self.symbol_buttons.append(btn)
+        
+        symbols_layout.addStretch()
+        answer_layout.addLayout(symbols_layout)
+        
+        # 答案输入行
+        input_layout = QHBoxLayout()
         
         # 答案输入框
-        answer_layout.addWidget(QLabel("输入答案:"))
+        input_layout.addWidget(QLabel("输入答案:"))
         self.answer_input = QLineEdit()
         self.answer_input.setPlaceholderText("输入你的答案后按回车或点击提交...")
         self.answer_input.setMinimumWidth(150)
         input_font = QFont()
         input_font.setPointSize(14)
         self.answer_input.setFont(input_font)
-        answer_layout.addWidget(self.answer_input)
+        
+        # 强制启用输入法支持
+        self.answer_input.setAttribute(Qt.WA_InputMethodEnabled, True)
+        self.answer_input.setInputMethodHints(Qt.ImhNone)
+        
+        # 设置焦点策略，确保能接收输入法事件
+        self.answer_input.setFocusPolicy(Qt.StrongFocus)
+        
+        # 确保窗口能接收输入法事件
+        self.answer_input.installEventFilter(self)
+        input_layout.addWidget(self.answer_input)
         
         self.submit_btn = QPushButton("提交答案")
         self.submit_btn.setMinimumWidth(100)
@@ -278,9 +335,9 @@ class MainWindow(QMainWindow):
             }
             QPushButton:hover { background-color: #45a049; }
         """)
-        answer_layout.addWidget(self.submit_btn)
+        input_layout.addWidget(self.submit_btn)
         
-        answer_layout.addSpacing(20)
+        input_layout.addSpacing(20)
         
         # 答案显示
         self.answer_label = QLabel("???")
@@ -291,7 +348,7 @@ class MainWindow(QMainWindow):
         self.answer_label.setFont(answer_font)
         self.answer_label.setStyleSheet("QLabel { color: #333; padding: 10px; }")
         self.answer_label.setMinimumWidth(150)
-        answer_layout.addWidget(self.answer_label)
+        input_layout.addWidget(self.answer_label)
         
         self.show_answer_btn = QPushButton("显示答案")
         self.show_answer_btn.setMinimumWidth(100)
@@ -305,7 +362,7 @@ class MainWindow(QMainWindow):
             }
             QPushButton:hover { background-color: #1976D2; }
         """)
-        answer_layout.addWidget(self.show_answer_btn)
+        input_layout.addWidget(self.show_answer_btn)
         
         self.add_wrong_btn = QPushButton("加入错题库")
         self.add_wrong_btn.setMinimumWidth(100)
@@ -320,7 +377,9 @@ class MainWindow(QMainWindow):
             QPushButton:hover { background-color: #d32f2f; }
             QPushButton:disabled { background-color: #cccccc; }
         """)
-        answer_layout.addWidget(self.add_wrong_btn)
+        input_layout.addWidget(self.add_wrong_btn)
+        
+        answer_layout.addLayout(input_layout)
         
         main_layout.addWidget(answer_group)
         
@@ -390,6 +449,25 @@ class MainWindow(QMainWindow):
         self.submit_btn.clicked.connect(self._submit_answer)
         self.answer_input.returnPressed.connect(self._submit_answer)
     
+    def _on_mode_changed(self):
+        """练习模式改变时保存配置"""
+        self._save_config()
+    
+    def _insert_symbol(self, symbol):
+        """插入符号到答案输入框"""
+        current_text = self.answer_input.text()
+        cursor_pos = self.answer_input.cursorPosition()
+        
+        # 在光标位置插入符号
+        new_text = current_text[:cursor_pos] + symbol + current_text[cursor_pos:]
+        self.answer_input.setText(new_text)
+        
+        # 将光标移动到插入符号之后
+        self.answer_input.setCursorPosition(cursor_pos + len(symbol))
+        
+        # 保持输入框焦点
+        self.answer_input.setFocus()
+    
     def _submit_answer(self):
         """提交答案"""
         if self.current_image_path is None:
@@ -420,6 +498,9 @@ class MainWindow(QMainWindow):
             self.status_bar.showMessage("回答正确!")
             self.answer_input.clear()
             
+            # 保存统计数据
+            self._save_config()
+            
             # 自动跳转到下一张
             if self.mode_random.isChecked():
                 # 随机模式
@@ -439,6 +520,9 @@ class MainWindow(QMainWindow):
             self.answer_label.setStyleSheet("QLabel { color: #f44336; padding: 10px; }")
             self.status_bar.showMessage(f"回答错误! 正确答案是: {correct_answer}")
             
+            # 保存统计数据
+            self._save_config()
+            
             # 自动加入错题库
             self._add_to_wrong_answers(silent=True)
             self.answer_input.clear()
@@ -448,6 +532,7 @@ class MainWindow(QMainWindow):
         self.correct_count = 0
         self.wrong_count = 0
         self._update_stats()
+        self._save_config()  # 保存重置后的统计
         self.status_bar.showMessage("统计已重置")
     
     def _update_stats(self):
@@ -506,6 +591,19 @@ class MainWindow(QMainWindow):
                         if self.gallery_combo.itemData(i) == last_gallery:
                             self.gallery_combo.setCurrentIndex(i)
                             break
+                
+                # 恢复统计数据
+                self.correct_count = config.get('correct_count', 0)
+                self.wrong_count = config.get('wrong_count', 0)
+                self._update_stats()
+                
+                # 恢复练习模式
+                practice_mode = config.get('practice_mode', 'sequential')
+                if practice_mode == 'random':
+                    self.mode_random.setChecked(True)
+                else:
+                    self.mode_sequential.setChecked(True)
+                    
             except Exception as e:
                 print(f"加载配置失败: {e}")
     
@@ -513,7 +611,13 @@ class MainWindow(QMainWindow):
         """保存配置"""
         try:
             CONFIG_DIR.mkdir(parents=True, exist_ok=True)
-            config = {'last_gallery': self.gallery_combo.currentData() or ''}
+            config = {
+                'last_gallery': self.gallery_combo.currentData() or '',
+                'last_image_index': self.current_index if self.current_index >= 0 else 0,
+                'correct_count': self.correct_count,
+                'wrong_count': self.wrong_count,
+                'practice_mode': 'random' if self.mode_random.isChecked() else 'sequential'
+            }
             with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
                 json.dump(config, f, ensure_ascii=False, indent=2)
         except Exception as e:
@@ -530,7 +634,26 @@ class MainWindow(QMainWindow):
         self._load_answers(folder)
         
         if self.image_list:
-            self.current_index = 0
+            # 尝试恢复上次的图片索引
+            saved_index = 0
+            if CONFIG_FILE.exists():
+                try:
+                    with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                        config = json.load(f)
+                    if config.get('last_gallery') == folder_path:
+                        saved_index = config.get('last_image_index', 0)
+                        # 确保索引在有效范围内
+                        if 0 <= saved_index < len(self.image_list):
+                            self.current_index = saved_index
+                        else:
+                            self.current_index = 0
+                    else:
+                        self.current_index = 0
+                except:
+                    self.current_index = 0
+            else:
+                self.current_index = 0
+                
             self._load_current_image()
             self.status_bar.showMessage(f"已加载 {len(self.image_list)} 张图片 - 输入答案后按回车提交")
         else:
@@ -586,6 +709,9 @@ class MainWindow(QMainWindow):
                 # 清空输入框并聚焦
                 self.answer_input.clear()
                 self.answer_input.setFocus()
+                
+                # 保存当前进度
+                self._save_config()
         
         self._update_button_states()
     
@@ -715,6 +841,19 @@ class MainWindow(QMainWindow):
             if not silent:
                 QMessageBox.warning(self, "错误", f"加入错题库失败: {e}")
     
+    def eventFilter(self, obj, event):
+        """事件过滤器，处理输入法事件"""
+        if obj == self.answer_input:
+            # 确保输入法事件能正确传递
+            if event.type() in [event.Type.InputMethod, event.Type.InputMethodQuery]:
+                return False  # 让事件继续传递
+        return super().eventFilter(obj, event)
+    
+    def closeEvent(self, event):
+        """程序关闭时保存配置"""
+        self._save_config()
+        event.accept()
+    
     def _update_button_states(self):
         """更新按钮状态"""
         has_images = len(self.image_list) > 0
@@ -737,8 +876,16 @@ class MainWindow(QMainWindow):
 
 
 def main():
+    # 在创建QApplication之前设置环境变量
+    os.environ.setdefault('QT_IM_MODULE', 'fcitx')  # 使用fcitx而不是fcitx5
+    os.environ.setdefault('XMODIFIERS', '@im=fcitx')
+    os.environ.setdefault('GTK_IM_MODULE', 'fcitx')
+    
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
+    
+    # 确保Qt应用程序支持输入法
+    app.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings, True)
     
     window = MainWindow()
     window.show()
