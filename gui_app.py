@@ -40,40 +40,48 @@ class ColorDetector:
     
     @staticmethod
     def get_warm_mask(hsv_image):
-        lower_red1 = np.array([0, 70, 50])
+        # 红色范围1 (0-10)
+        lower_red1 = np.array([0, 25, 40])
         upper_red1 = np.array([10, 255, 255])
         mask_red1 = cv2.inRange(hsv_image, lower_red1, upper_red1)
         
-        lower_red2 = np.array([160, 70, 50])
+        # 红色范围2 (156-180)
+        lower_red2 = np.array([156, 25, 40])
         upper_red2 = np.array([180, 255, 255])
         mask_red2 = cv2.inRange(hsv_image, lower_red2, upper_red2)
         
-        lower_orange = np.array([10, 70, 50])
-        upper_orange = np.array([25, 255, 255])
+        # 橙色范围 (10-20)
+        lower_orange = np.array([10, 25, 40])
+        upper_orange = np.array([20, 255, 255])
         mask_orange = cv2.inRange(hsv_image, lower_orange, upper_orange)
         
-        lower_yellow = np.array([25, 70, 50])
-        upper_yellow = np.array([40, 255, 255])
+        # 黄色范围 (20-30)
+        lower_yellow = np.array([20, 25, 40])
+        upper_yellow = np.array([30, 255, 255])
         mask_yellow = cv2.inRange(hsv_image, lower_yellow, upper_yellow)
         
         return mask_red1 | mask_red2 | mask_orange | mask_yellow
 
     @staticmethod
     def get_cool_mask(hsv_image):
-        lower_green = np.array([40, 70, 50])
-        upper_green = np.array([80, 255, 255])
+        # 黄绿+绿色范围 (30-85)
+        lower_green = np.array([30, 25, 40])
+        upper_green = np.array([85, 255, 255])
         mask_green = cv2.inRange(hsv_image, lower_green, upper_green)
         
-        lower_cyan = np.array([80, 70, 50])
-        upper_cyan = np.array([100, 255, 255])
+        # 青色范围 (85-105)
+        lower_cyan = np.array([85, 25, 40])
+        upper_cyan = np.array([105, 255, 255])
         mask_cyan = cv2.inRange(hsv_image, lower_cyan, upper_cyan)
         
-        lower_blue = np.array([100, 70, 50])
+        # 蓝色范围 (105-130)
+        lower_blue = np.array([105, 25, 40])
         upper_blue = np.array([130, 255, 255])
         mask_blue = cv2.inRange(hsv_image, lower_blue, upper_blue)
         
-        lower_purple = np.array([130, 70, 50])
-        upper_purple = np.array([160, 255, 255])
+        # 紫色范围 (130-156)
+        lower_purple = np.array([130, 25, 40])
+        upper_purple = np.array([156, 255, 255])
         mask_purple = cv2.inRange(hsv_image, lower_purple, upper_purple)
         
         return mask_green | mask_cyan | mask_blue | mask_purple

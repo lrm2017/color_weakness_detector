@@ -16,28 +16,31 @@ def get_warm_mask(hsv_image):
     """
     获取暖色掩码（红、橙、黄）
     HSV中H值范围：0-180（OpenCV）
-    - 红色：0-10 和 160-180
-    - 橙色：10-25
-    - 黄色：25-40
+    阈值基于题库图片颜色分布统计：
+    - 红色：0-10 和 156-180
+    - 橙色：10-20
+    - 黄色：20-30 (不含黄绿色，黄绿色归入冷色)
+    - S >= 25 (题库5%分位数约为23-26)
+    - V >= 40 (题库5%分位数约为78-108，适当放宽)
     """
     # 红色范围1 (0-10)
-    lower_red1 = np.array([0, 70, 50])
+    lower_red1 = np.array([0, 25, 40])
     upper_red1 = np.array([10, 255, 255])
     mask_red1 = cv2.inRange(hsv_image, lower_red1, upper_red1)
     
-    # 红色范围2 (160-180)
-    lower_red2 = np.array([160, 70, 50])
+    # 红色范围2 (156-180)
+    lower_red2 = np.array([156, 25, 40])
     upper_red2 = np.array([180, 255, 255])
     mask_red2 = cv2.inRange(hsv_image, lower_red2, upper_red2)
     
-    # 橙色范围 (10-25)
-    lower_orange = np.array([10, 70, 50])
-    upper_orange = np.array([25, 255, 255])
+    # 橙色范围 (10-20)
+    lower_orange = np.array([10, 25, 40])
+    upper_orange = np.array([20, 255, 255])
     mask_orange = cv2.inRange(hsv_image, lower_orange, upper_orange)
     
-    # 黄色范围 (25-40)
-    lower_yellow = np.array([25, 70, 50])
-    upper_yellow = np.array([40, 255, 255])
+    # 黄色范围 (20-30)
+    lower_yellow = np.array([20, 25, 40])
+    upper_yellow = np.array([30, 255, 255])
     mask_yellow = cv2.inRange(hsv_image, lower_yellow, upper_yellow)
     
     # 合并所有暖色掩码
@@ -48,30 +51,32 @@ def get_warm_mask(hsv_image):
 def get_cool_mask(hsv_image):
     """
     获取冷色掩码（绿、青、蓝、紫）
-    HSV中H值范围：
-    - 绿色：40-80
-    - 青色：80-100
-    - 蓝色：100-130
-    - 紫色：130-160
+    HSV中H值范围（基于题库统计）：
+    - 黄绿+绿色：30-85 (包含黄绿色，因为题库中黄绿色属于背景冷色)
+    - 青色：85-105
+    - 蓝色：105-130
+    - 紫色：130-156
+    - S >= 25 (与暖色保持一致)
+    - V >= 40 (与暖色保持一致)
     """
-    # 绿色范围 (40-80)
-    lower_green = np.array([40, 70, 50])
-    upper_green = np.array([80, 255, 255])
+    # 黄绿+绿色范围 (30-85)
+    lower_green = np.array([30, 25, 40])
+    upper_green = np.array([85, 255, 255])
     mask_green = cv2.inRange(hsv_image, lower_green, upper_green)
     
-    # 青色范围 (80-100)
-    lower_cyan = np.array([80, 70, 50])
-    upper_cyan = np.array([100, 255, 255])
+    # 青色范围 (85-105)
+    lower_cyan = np.array([85, 25, 40])
+    upper_cyan = np.array([105, 255, 255])
     mask_cyan = cv2.inRange(hsv_image, lower_cyan, upper_cyan)
     
-    # 蓝色范围 (100-130)
-    lower_blue = np.array([100, 70, 50])
+    # 蓝色范围 (105-130)
+    lower_blue = np.array([105, 25, 40])
     upper_blue = np.array([130, 255, 255])
     mask_blue = cv2.inRange(hsv_image, lower_blue, upper_blue)
     
-    # 紫色范围 (130-160)
-    lower_purple = np.array([130, 70, 50])
-    upper_purple = np.array([160, 255, 255])
+    # 紫色范围 (130-156)
+    lower_purple = np.array([130, 25, 40])
+    upper_purple = np.array([156, 255, 255])
     mask_purple = cv2.inRange(hsv_image, lower_purple, upper_purple)
     
     # 合并所有冷色掩码
