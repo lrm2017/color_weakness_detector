@@ -86,7 +86,7 @@ def get_cool_mask(hsv_image):
 
 def find_and_draw_contours(image, mask, color, min_area=100):
     """
-    在图像上找到并绘制轮廓
+    在图像上找到并绘制连通组件
     
     Args:
         image: 原始图像
@@ -100,31 +100,43 @@ def find_and_draw_contours(image, mask, color, min_area=100):
     # 形态学操作，去除噪点
     kernel = np.ones((5, 5), np.uint8)
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
-    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
     
-    # 查找轮廓
-    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # 查找连通组件
+    num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(mask, connectivity=8)
     
     result = image.copy()
     count = 0
     
-    for contour in contours:
-        area = cv2.contourArea(contour)
-        if area > min_area:
-            # 绘制轮廓
-            cv2.drawContours(result, [contour], -1, color, 3)
-            
-            # 绘制边界框
-            x, y, w, h = cv2.boundingRect(contour)
-            cv2.rectangle(result, (x, y), (x + w, y + h), color, 2)
-            count += 1
+    # 找到最大的连通组件
+    if num_labels > 1:
+        areas = stats[1:, cv2.CC_STAT_AREA]  # 跳过背景
+        sorted_indices = np.argsort(areas)[::-1]  # 降序
+        
+        for idx in sorted_indices[:2]:  # 最大的两个
+            real_idx = idx + 1
+            area = stats[real_idx, cv2.CC_STAT_AREA]
+            if area > min_area:
+                x = stats[real_idx, cv2.CC_STAT_LEFT]
+                y = stats[real_idx, cv2.CC_STAT_TOP]
+                w = stats[real_idx, cv2.CC_STAT_WIDTH]
+                h = stats[real_idx, cv2.CC_STAT_HEIGHT]
+                
+                cv2.rectangle(result, (x, y), (x + w, y + h), color, 2)
+                count += 1
     
     return result, count
 
 
+def is_warm(h):
+    """
+    判断H值是否为暖色
+    """
+    return (0 <= h <= 30) or (150 <= h <= 180)
+
+
 def process_image(image_path, output_path=None, min_area=100):
     """
-    处理图像，识别并圈出少数派颜色
+    处理图像，识别并圈出少数派颜色，使用颜色分布和动态阈值
     
     Args:
         image_path: 输入图像路径
@@ -142,34 +154,109 @@ def process_image(image_path, output_path=None, min_area=100):
     # 转换为HSV色彩空间
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     
-    # 获取暖色和冷色掩码
-    warm_mask = get_warm_mask(hsv)
-    cool_mask = get_cool_mask(hsv)
+    # 过滤低饱和度和低亮度的像素（背景）
+    mask_colorful = cv2.inRange(hsv, np.array([0, 20, 40]), np.array([180, 255, 255]))
+    colorful_pixels = hsv[mask_colorful > 0]
     
-    # 计算暖色和冷色像素数量
-    warm_pixels = cv2.countNonZero(warm_mask)
-    cool_pixels = cv2.countNonZero(cool_mask)
+    if len(colorful_pixels) == 0:
+        print("警告：未检测到明显的彩色区域")
+        return image
     
-    total_colored = warm_pixels + cool_pixels
+    # 提取像素进行K-means聚类
+    pixel_values = colorful_pixels.reshape((-1, 3))
+    pixel_values = np.float32(pixel_values)
+    
+    # K-means参数
+    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.2)
+    k = 15  # 增加聚类数量
+    _, labels, centers = cv2.kmeans(pixel_values, k, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+    centers = centers.astype(np.uint8)  # 确保是uint8
+    
+    # 计算每个簇的像素数
+    unique, counts = np.unique(labels, return_counts=True)
+    cluster_counts = dict(zip(unique, counts))
+    
+    # 分类簇为暖色或冷色
+    warm_clusters = []
+    cool_clusters = []
+    for i, center in enumerate(centers):
+        h, s, v = center
+        count = cluster_counts[i]
+        if is_warm(h):
+            warm_clusters.append((i, count, center))
+        else:
+            cool_clusters.append((i, count, center))
+    
+    # 计算总暖色和冷色像素
+    total_warm = sum(count for _, count, _ in warm_clusters)
+    total_cool = sum(count for _, count, _ in cool_clusters)
+    
+    total_colored = total_warm + total_cool
     if total_colored == 0:
         print("警告：未检测到明显的暖色或冷色区域")
         return image
     
-    warm_ratio = warm_pixels / total_colored * 100
-    cool_ratio = cool_pixels / total_colored * 100
+    warm_ratio = total_warm / total_colored * 100
+    cool_ratio = total_cool / total_colored * 100
     
-    print(f"暖色像素: {warm_pixels} ({warm_ratio:.1f}%)")
-    print(f"冷色像素: {cool_pixels} ({cool_ratio:.1f}%)")
+    print(f"暖色簇数量: {len(warm_clusters)}, 冷色簇数量: {len(cool_clusters)}")
+    for i, (idx, count, center) in enumerate(warm_clusters):
+        print(f"暖色簇{i}: 像素数{count}, HSV{center}")
+    for i, (idx, count, center) in enumerate(cool_clusters):
+        print(f"冷色簇{i}: 像素数{count}, HSV{center}")
     
-    # 根据比例决定圈出哪种颜色
-    if warm_pixels > cool_pixels:
-        print("暖色居多，圈出冷色块（用蓝色框标记）")
-        result, count = find_and_draw_contours(image, cool_mask, (255, 0, 0), min_area)
-        label = "Cool colors marked (warm dominant)"
+    # 根据背景色调决定圈出哪种颜色
+    if total_cool > total_warm:
+        # 背景冷色调，圈出暖色中数量较多的色块
+        if warm_clusters:
+            # 找出暖色簇中像素数最多的两个
+            sorted_warm = sorted(warm_clusters, key=lambda x: x[1], reverse=True)
+            target_clusters = sorted_warm[:2]
+            print("背景冷色调，圈出暖色中数量较多的色块（用红色框标记）")
+            label = "Warm colors marked (cool background)"
+            color = (0, 0, 255)  # 红色
+        else:
+            print("未检测到暖色簇")
+            return image
     else:
-        print("冷色居多，圈出暖色块（用红色框标记）")
-        result, count = find_and_draw_contours(image, warm_mask, (0, 0, 255), min_area)
-        label = "Warm colors marked (cool dominant)"
+        # 背景暖色调，圈出冷色中数量较多的色块
+        if cool_clusters:
+            # 找出冷色簇中像素数最多的两个
+            sorted_cool = sorted(cool_clusters, key=lambda x: x[1], reverse=True)
+            target_clusters = sorted_cool[:2]
+            print("背景暖色调，圈出冷色中数量较多的色块（用蓝色框标记）")
+            label = "Cool colors marked (warm background)"
+            color = (255, 0, 0)  # 蓝色
+        else:
+            print("未检测到冷色簇")
+            return image
+    
+    # 创建所有目标簇的联合掩码
+    combined_mask = np.zeros_like(hsv[:, :, 0], dtype=np.uint8)
+    for cluster_idx, _, center in target_clusters:
+        h_center = int(center[0])
+        s_center = int(center[1])
+        v_center = int(center[2])
+        h_range = 10
+        s_range = 30
+        v_range = 30
+        
+        lower = np.array([
+            max(0, h_center - h_range),
+            max(0, s_center - s_range),
+            max(0, v_center - v_range)
+        ], dtype=np.uint8)
+        upper = np.array([
+            min(180, h_center + h_range),
+            min(255, s_center + s_range),
+            min(255, v_center + v_range)
+        ], dtype=np.uint8)
+        
+        mask = cv2.inRange(hsv, lower, upper)
+        combined_mask = cv2.bitwise_or(combined_mask, mask)
+    
+    # 绘制轮廓
+    result, count = find_and_draw_contours(image, combined_mask, color, min_area)
     
     print(f"检测到 {count} 个色块")
     
