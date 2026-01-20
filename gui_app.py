@@ -22,10 +22,15 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QSize, QStandardPaths
 from PySide6.QtGui import QPixmap, QImage, QFont
 
-# 设置输入法环境变量（在导入Qt之后设置）
-os.environ.setdefault('QT_IM_MODULE', 'fcitx')  # 使用fcitx而不是fcitx5
-os.environ.setdefault('XMODIFIERS', '@im=fcitx')
-os.environ.setdefault('GTK_IM_MODULE', 'fcitx')
+from multi_channel_color_detector import MultiChannelColorDetector
+from simple_color_test import analyze_color_channels
+from color_vision_filters import ColorVisionFilters, FilterType
+from image_utils import imread_unicode, imwrite_unicode
+
+# # 设置输入法环境变量（在导入Qt之后设置）
+# os.environ.setdefault('QT_IM_MODULE', 'fcitx')  # 使用fcitx而不是fcitx5
+# os.environ.setdefault('XMODIFIERS', '@im=fcitx')
+# os.environ.setdefault('GTK_IM_MODULE', 'fcitx')
 
 
 # 支持的图片格式
@@ -34,6 +39,7 @@ IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.bmp', '.gif', '.webp', '.tiff', '
 # 程序目录
 APP_DIR = Path(__file__).parent.resolve()
 DEFAULT_IMAGES_DIR = APP_DIR / "downloaded_images"
+RESULTS_DIR = APP_DIR / "test_results"  # 测试结果目录
 
 # 配置文件路径
 CONFIG_DIR = Path(QStandardPaths.writableLocation(QStandardPaths.AppConfigLocation)) / "color_weakness_detector"
@@ -179,9 +185,13 @@ class MainWindow(QMainWindow):
         # 启用输入法支持
         self.setAttribute(Qt.WA_InputMethodEnabled, True)
         
-        # 初始化图库路径
+        # 初始化图库路径和结果目录
         self.images_dir = DEFAULT_IMAGES_DIR
         self.wrong_answers_dir = None
+        self.results_dir = RESULTS_DIR
+        
+        # 确保结果目录存在
+        self.results_dir.mkdir(exist_ok=True)
         
         self.image_list = []
         self.current_index = -1
@@ -194,6 +204,13 @@ class MainWindow(QMainWindow):
         self.correct_count = 0
         self.wrong_count = 0
         self.practice_mode = False  # 是否处于练习模式
+        
+        # 多通道检测器
+        self.multichannel_detector = MultiChannelColorDetector()
+        
+        # 当前滤镜状态
+        self.current_filter = FilterType.NONE
+        self.filtered_image = None
         
         self._setup_ui()
         self._connect_signals()
@@ -433,6 +450,75 @@ class MainWindow(QMainWindow):
         
         main_layout.addWidget(answer_group)
         
+        # === 滤镜控制区 ===
+        filter_group = QGroupBox("色觉辅助滤镜")
+        filter_layout = QVBoxLayout(filter_group)
+        
+        # 滤镜选择行
+        filter_select_layout = QHBoxLayout()
+        filter_select_layout.addWidget(QLabel("选择滤镜:"))
+        
+        self.filter_combo = QComboBox()
+        self.filter_combo.setMinimumWidth(200)
+        
+        # 添加所有滤镜选项
+        for filter_type in FilterType:
+            description = ColorVisionFilters.get_filter_description(filter_type)
+            self.filter_combo.addItem(description, filter_type.value)
+        
+        filter_select_layout.addWidget(self.filter_combo)
+        
+        self.apply_filter_btn = QPushButton("应用滤镜")
+        self.apply_filter_btn.setMinimumWidth(100)
+        self.apply_filter_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #8BC34A;
+                color: white;
+                font-weight: bold;
+                padding: 8px 16px;
+                border-radius: 4px;
+            }
+            QPushButton:hover { background-color: #689F38; }
+            QPushButton:disabled { background-color: #cccccc; }
+        """)
+        self.apply_filter_btn.clicked.connect(self._apply_filter)
+        filter_select_layout.addWidget(self.apply_filter_btn)
+        
+        self.reset_filter_btn = QPushButton("重置滤镜")
+        self.reset_filter_btn.setMinimumWidth(100)
+        self.reset_filter_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #FFC107;
+                color: white;
+                font-weight: bold;
+                padding: 8px 16px;
+                border-radius: 4px;
+            }
+            QPushButton:hover { background-color: #FF8F00; }
+            QPushButton:disabled { background-color: #cccccc; }
+        """)
+        self.reset_filter_btn.clicked.connect(self._reset_filter)
+        filter_select_layout.addWidget(self.reset_filter_btn)
+        
+        filter_select_layout.addStretch()
+        filter_layout.addLayout(filter_select_layout)
+        
+        # 滤镜说明
+        self.filter_description = QLabel("选择滤镜以辅助识别不同类型的色觉缺陷")
+        self.filter_description.setStyleSheet("""
+            QLabel {
+                color: #666;
+                font-style: italic;
+                padding: 5px;
+                background-color: #f9f9f9;
+                border-radius: 3px;
+            }
+        """)
+        self.filter_description.setWordWrap(True)
+        filter_layout.addWidget(self.filter_description)
+        
+        main_layout.addWidget(filter_group)
+        
         # === 底部控制区 ===
         bottom_group = QGroupBox("控制面板")
         bottom_layout = QHBoxLayout(bottom_group)
@@ -451,10 +537,15 @@ class MainWindow(QMainWindow):
         
         bottom_layout.addSpacing(30)
         
+        # 识别方法选择
         method_layout = QHBoxLayout()
         method_layout.addWidget(QLabel("识别方法:"))
         self.method_combo = QComboBox()
         self.method_combo.addItem("冷暖色识别", "warm_cool")
+        self.method_combo.addItem("红绿通道测试", "red_green")
+        self.method_combo.addItem("蓝黄通道测试", "blue_yellow")
+        self.method_combo.addItem("综合多通道测试", "comprehensive")
+        self.method_combo.addItem("快速颜色分析", "quick_analysis")
         self.method_combo.setMinimumWidth(150)
         method_layout.addWidget(self.method_combo)
         bottom_layout.addLayout(method_layout)
@@ -475,6 +566,37 @@ class MainWindow(QMainWindow):
             QPushButton:disabled { background-color: #cccccc; }
         """)
         bottom_layout.addWidget(self.detect_btn)
+        
+        # 结果管理按钮
+        self.view_results_btn = QPushButton("查看结果")
+        self.view_results_btn.setMinimumWidth(100)
+        self.view_results_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #FF9800;
+                color: white;
+                font-weight: bold;
+                padding: 8px 16px;
+                border-radius: 4px;
+            }
+            QPushButton:hover { background-color: #F57C00; }
+        """)
+        self.view_results_btn.clicked.connect(self._open_results_folder)
+        bottom_layout.addWidget(self.view_results_btn)
+        
+        self.clear_results_btn = QPushButton("清理结果")
+        self.clear_results_btn.setMinimumWidth(100)
+        self.clear_results_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #607D8B;
+                color: white;
+                font-weight: bold;
+                padding: 8px 16px;
+                border-radius: 4px;
+            }
+            QPushButton:hover { background-color: #455A64; }
+        """)
+        self.clear_results_btn.clicked.connect(self._clear_results)
+        bottom_layout.addWidget(self.clear_results_btn)
         
         bottom_layout.addStretch()
         
@@ -499,6 +621,7 @@ class MainWindow(QMainWindow):
         self.remove_wrong_btn.clicked.connect(self._remove_from_wrong_answers)
         self.submit_btn.clicked.connect(self._submit_answer)
         self.answer_input.returnPressed.connect(self._submit_answer)
+        self.filter_combo.currentIndexChanged.connect(self._on_filter_changed)
     
     def _browse_images_dir(self):
         """浏览选择图库目录"""
@@ -842,7 +965,7 @@ class MainWindow(QMainWindow):
             image_path = self.image_list[self.current_index]
             self.current_image_path = image_path
             
-            self.current_image = cv2.imread(str(image_path))
+            self.current_image = imread_unicode(str(image_path))
             
             if self.current_image is not None:
                 pixmap = self._cv2_to_pixmap(self.current_image)
@@ -856,6 +979,11 @@ class MainWindow(QMainWindow):
                 self.answer_label.setText("???")
                 self.answer_label.setStyleSheet("QLabel { color: #333; padding: 10px; }")
                 self.show_answer_btn.setText("显示答案")
+                
+                # 重置滤镜状态
+                self.current_filter = FilterType.NONE
+                self.filtered_image = None
+                self.filter_combo.setCurrentIndex(0)
                 
                 # 清空输入框并聚焦
                 self.answer_input.clear()
@@ -903,11 +1031,258 @@ class MainWindow(QMainWindow):
         
         method = self.method_combo.currentData()
         
-        if method == "warm_cool":
-            result_image, stats = ColorDetector.detect_warm_cool(self.current_image)
+        try:
+            # 获取当前显示的图像（可能是滤镜后的图像）
+            display_image = self._get_current_display_image()
+            
+            if method == "warm_cool":
+                result_image, stats = ColorDetector.detect_warm_cool(display_image)
+                pixmap = self._cv2_to_pixmap(result_image)
+                self.result_label.setImage(pixmap)
+                self.status_bar.showMessage(stats['message'])
+                
+            elif method == "red_green":
+                self._run_multichannel_test_on_image(display_image, "red_green")
+                
+            elif method == "blue_yellow":
+                self._run_multichannel_test_on_image(display_image, "blue_yellow")
+                
+            elif method == "comprehensive":
+                self._run_multichannel_test_on_image(display_image, "comprehensive")
+                
+            elif method == "quick_analysis":
+                self._run_quick_analysis_on_image(display_image)
+                
+        except Exception as e:
+            QMessageBox.critical(self, "错误", f"识别过程中发生错误: {str(e)}")
+    
+    def _run_multichannel_test_on_image(self, image, channel_type):
+        """在指定图像上运行多通道测试"""
+        if self.current_image_path is None:
+            return
+        
+        try:
+            # 临时保存当前图像用于测试
+            temp_path = self.results_dir / "temp_filtered_image.jpg"
+            imwrite_unicode(str(temp_path), image)
+            
+            # 生成输出文件名
+            timestamp = self._get_timestamp()
+            filter_suffix = f"_{self.current_filter.value}" if self.current_filter != FilterType.NONE else ""
+            base_name = f"{self.current_image_path.stem}_{channel_type}{filter_suffix}_{timestamp}"
+            output_path = self.results_dir / f"{base_name}.jpg"
+            
+            if channel_type == "red_green":
+                result_image, data = self.multichannel_detector.test_red_green_channel(
+                    temp_path, output_path, min_area=50
+                )
+                message = f"红绿通道测试完成 - 红色: {data['red_ratio']:.1%}, 绿色: {data['green_ratio']:.1%}"
+                
+            elif channel_type == "blue_yellow":
+                result_image, data = self.multichannel_detector.test_blue_yellow_channel(
+                    temp_path, output_path, min_area=50
+                )
+                message = f"蓝黄通道测试完成 - 蓝色: {data['blue_ratio']:.1%}, 黄色: {data['yellow_ratio']:.1%}"
+                
+            elif channel_type == "comprehensive":
+                result_image, data = self.multichannel_detector.comprehensive_test(
+                    temp_path, output_path, min_area=50
+                )
+                
+                # 生成详细报告
+                rg_result, rg_data = self.multichannel_detector.test_red_green_channel(
+                    temp_path, min_area=50
+                )
+                by_result, by_data = self.multichannel_detector.test_blue_yellow_channel(
+                    temp_path, min_area=50
+                )
+                
+                report = self.multichannel_detector.generate_report(
+                    temp_path, rg_data, by_data, data
+                )
+                
+                # 添加滤镜信息到报告
+                report['filter_applied'] = self.current_filter.value
+                report['original_image_path'] = str(self.current_image_path)
+                
+                # 保存报告
+                report_path = self.results_dir / f"{base_name}_report.json"
+                with open(report_path, 'w', encoding='utf-8') as f:
+                    import json
+                    json.dump(report, f, ensure_ascii=False, indent=2)
+                
+                diagnosis = report['diagnosis']
+                message = f"综合测试完成 - 诊断: {diagnosis['type']} (置信度: {diagnosis['confidence']:.2f})"
+            
+            # 显示结果图像
             pixmap = self._cv2_to_pixmap(result_image)
             self.result_label.setImage(pixmap)
-            self.status_bar.showMessage(stats['message'])
+            
+            if self.current_filter != FilterType.NONE:
+                filter_name = ColorVisionFilters.get_filter_description(self.current_filter)
+                message += f" [滤镜: {filter_name}]"
+            
+            self.status_bar.showMessage(message)
+            
+            # 清理临时文件
+            if temp_path.exists():
+                temp_path.unlink()
+            
+        except Exception as e:
+            QMessageBox.critical(self, "错误", f"多通道测试失败: {str(e)}")
+    
+    def _run_quick_analysis_on_image(self, image):
+        """在指定图像上运行快速分析"""
+        if self.current_image_path is None:
+            return
+        
+        try:
+            # 临时保存当前图像用于分析
+            temp_path = self.results_dir / "temp_filtered_image.jpg"
+            imwrite_unicode(str(temp_path), image)
+            
+            results = analyze_color_channels(temp_path)
+            
+            if results is None:
+                self.status_bar.showMessage("无法分析图像或未检测到彩色区域")
+                return
+            
+            # 创建分析结果显示
+            rg = results['red_green_channel']
+            by = results['blue_yellow_channel']
+            
+            message = (f"快速分析完成 - "
+                      f"红绿通道(红:{rg['red_ratio']:.1%}/绿:{rg['green_ratio']:.1%}) "
+                      f"蓝黄通道(蓝:{by['blue_ratio']:.1%}/黄:{by['yellow_ratio']:.1%}) "
+                      f"诊断:{results['diagnosis']}")
+            
+            # 保存分析结果
+            timestamp = self._get_timestamp()
+            filter_suffix = f"_{self.current_filter.value}" if self.current_filter != FilterType.NONE else ""
+            result_path = self.results_dir / f"{self.current_image_path.stem}_quick_analysis{filter_suffix}_{timestamp}.json"
+            
+            # 添加滤镜信息
+            results['filter_applied'] = self.current_filter.value
+            results['original_image_path'] = str(self.current_image_path)
+            
+            with open(result_path, 'w', encoding='utf-8') as f:
+                import json
+                json.dump(results, f, ensure_ascii=False, indent=2)
+            
+            # 显示当前图像（快速分析不生成新图像）
+            pixmap = self._cv2_to_pixmap(image)
+            self.result_label.setImage(pixmap)
+            
+            if self.current_filter != FilterType.NONE:
+                filter_name = ColorVisionFilters.get_filter_description(self.current_filter)
+                message += f" [滤镜: {filter_name}]"
+            
+            self.status_bar.showMessage(message)
+            
+            # 清理临时文件
+            if temp_path.exists():
+                temp_path.unlink()
+            
+        except Exception as e:
+            QMessageBox.critical(self, "错误", f"快速分析失败: {str(e)}")
+    
+    def _run_multichannel_test(self, channel_type):
+        """运行多通道测试"""
+        if self.current_image_path is None:
+            return
+        
+        try:
+            # 生成输出文件名
+            timestamp = self._get_timestamp()
+            base_name = f"{self.current_image_path.stem}_{channel_type}_{timestamp}"
+            output_path = self.results_dir / f"{base_name}.jpg"
+            
+            if channel_type == "red_green":
+                result_image, data = self.multichannel_detector.test_red_green_channel(
+                    self.current_image_path, output_path, min_area=50
+                )
+                message = f"红绿通道测试完成 - 红色: {data['red_ratio']:.1%}, 绿色: {data['green_ratio']:.1%}"
+                
+            elif channel_type == "blue_yellow":
+                result_image, data = self.multichannel_detector.test_blue_yellow_channel(
+                    self.current_image_path, output_path, min_area=50
+                )
+                message = f"蓝黄通道测试完成 - 蓝色: {data['blue_ratio']:.1%}, 黄色: {data['yellow_ratio']:.1%}"
+                
+            elif channel_type == "comprehensive":
+                result_image, data = self.multichannel_detector.comprehensive_test(
+                    self.current_image_path, output_path, min_area=50
+                )
+                
+                # 生成详细报告
+                rg_result, rg_data = self.multichannel_detector.test_red_green_channel(
+                    self.current_image_path, min_area=50
+                )
+                by_result, by_data = self.multichannel_detector.test_blue_yellow_channel(
+                    self.current_image_path, min_area=50
+                )
+                
+                report = self.multichannel_detector.generate_report(
+                    self.current_image_path, rg_data, by_data, data
+                )
+                
+                # 保存报告
+                report_path = self.results_dir / f"{base_name}_report.json"
+                with open(report_path, 'w', encoding='utf-8') as f:
+                    import json
+                    json.dump(report, f, ensure_ascii=False, indent=2)
+                
+                diagnosis = report['diagnosis']
+                message = f"综合测试完成 - 诊断: {diagnosis['type']} (置信度: {diagnosis['confidence']:.2f})"
+            
+            # 显示结果图像
+            pixmap = self._cv2_to_pixmap(result_image)
+            self.result_label.setImage(pixmap)
+            self.status_bar.showMessage(message)
+            
+        except Exception as e:
+            QMessageBox.critical(self, "错误", f"多通道测试失败: {str(e)}")
+    
+    def _run_quick_analysis(self):
+        """运行快速颜色分析"""
+        if self.current_image_path is None:
+            return
+        
+        try:
+            results = analyze_color_channels(self.current_image_path)
+            
+            if results is None:
+                self.status_bar.showMessage("无法分析图像或未检测到彩色区域")
+                return
+            
+            # 创建分析结果显示
+            rg = results['red_green_channel']
+            by = results['blue_yellow_channel']
+            
+            message = (f"快速分析完成 - "
+                      f"红绿通道(红:{rg['red_ratio']:.1%}/绿:{rg['green_ratio']:.1%}) "
+                      f"蓝黄通道(蓝:{by['blue_ratio']:.1%}/黄:{by['yellow_ratio']:.1%}) "
+                      f"诊断:{results['diagnosis']}")
+            
+            # 保存分析结果
+            timestamp = self._get_timestamp()
+            result_path = self.results_dir / f"{self.current_image_path.stem}_quick_analysis_{timestamp}.json"
+            with open(result_path, 'w', encoding='utf-8') as f:
+                import json
+                json.dump(results, f, ensure_ascii=False, indent=2)
+            
+            # 显示原图（快速分析不生成新图像）
+            pixmap = self._cv2_to_pixmap(self.current_image)
+            self.result_label.setImage(pixmap)
+            self.status_bar.showMessage(message)
+            
+        except Exception as e:
+            QMessageBox.critical(self, "错误", f"快速分析失败: {str(e)}")
+    
+    def _get_timestamp(self):
+        """获取时间戳字符串"""
+        from datetime import datetime
+        return datetime.now().strftime("%Y%m%d_%H%M%S")
     
     def _toggle_answer(self):
         """切换答案显示"""
@@ -1051,6 +1426,137 @@ class MainWindow(QMainWindow):
             if not silent:
                 QMessageBox.warning(self, "错误", f"加入错题库失败: {e}")
     
+    def _open_results_folder(self):
+        """打开结果文件夹"""
+        try:
+            import subprocess
+            import platform
+            
+            # 确保结果目录存在
+            self.results_dir.mkdir(exist_ok=True)
+            
+            system = platform.system()
+            if system == "Windows":
+                subprocess.run(["explorer", str(self.results_dir)])
+            elif system == "Darwin":  # macOS
+                subprocess.run(["open", str(self.results_dir)])
+            else:  # Linux
+                subprocess.run(["xdg-open", str(self.results_dir)])
+                
+            self.status_bar.showMessage(f"已打开结果目录: {self.results_dir}")
+            
+        except Exception as e:
+            QMessageBox.information(
+                self, 
+                "结果目录", 
+                f"结果保存在: {self.results_dir}\n\n无法自动打开文件夹: {str(e)}"
+            )
+    
+    def _clear_results(self):
+        """清理测试结果"""
+        if not self.results_dir.exists():
+            self.status_bar.showMessage("结果目录不存在")
+            return
+        
+        # 统计文件数量
+        files = list(self.results_dir.glob("*"))
+        if not files:
+            self.status_bar.showMessage("结果目录已经是空的")
+            return
+        
+        # 确认对话框
+        reply = QMessageBox.question(
+            self,
+            "确认清理",
+            f"确定要删除结果目录中的 {len(files)} 个文件吗？\n\n这个操作不可撤销！",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No
+        )
+        
+        if reply == QMessageBox.Yes:
+            try:
+                deleted_count = 0
+                for file_path in files:
+                    if file_path.is_file():
+                        file_path.unlink()
+                        deleted_count += 1
+                    elif file_path.is_dir():
+                        import shutil
+                        shutil.rmtree(file_path)
+                        deleted_count += 1
+                
+                self.status_bar.showMessage(f"已清理 {deleted_count} 个文件")
+                
+            except Exception as e:
+                QMessageBox.critical(self, "错误", f"清理结果失败: {str(e)}")
+    
+    def _on_filter_changed(self):
+        """滤镜选择改变时更新描述"""
+        filter_value = self.filter_combo.currentData()
+        if filter_value:
+            filter_type = FilterType(filter_value)
+            description = ColorVisionFilters.get_filter_description(filter_type)
+            self.filter_description.setText(description)
+    
+    def _apply_filter(self):
+        """应用选中的滤镜"""
+        if self.current_image is None:
+            QMessageBox.warning(self, "警告", "请先加载图片")
+            return
+        
+        filter_value = self.filter_combo.currentData()
+        if not filter_value:
+            return
+        
+        try:
+            filter_type = FilterType(filter_value)
+            self.current_filter = filter_type
+            
+            # 应用滤镜
+            self.filtered_image = ColorVisionFilters.apply_filter(self.current_image, filter_type)
+            
+            # 显示滤镜后的图像
+            pixmap = self._cv2_to_pixmap(self.filtered_image)
+            self.original_label.setImage(pixmap)
+            
+            # 清空识别结果
+            self.result_label.clear()
+            self.result_label.setText("滤镜已应用，点击\"开始识别\"查看结果")
+            
+            filter_name = ColorVisionFilters.get_filter_description(filter_type)
+            self.status_bar.showMessage(f"已应用滤镜: {filter_name}")
+            
+        except Exception as e:
+            QMessageBox.critical(self, "错误", f"应用滤镜失败: {str(e)}")
+    
+    def _reset_filter(self):
+        """重置滤镜，显示原图"""
+        if self.current_image is None:
+            return
+        
+        self.current_filter = FilterType.NONE
+        self.filtered_image = None
+        
+        # 显示原图
+        pixmap = self._cv2_to_pixmap(self.current_image)
+        self.original_label.setImage(pixmap)
+        
+        # 重置滤镜选择
+        self.filter_combo.setCurrentIndex(0)
+        
+        # 清空识别结果
+        self.result_label.clear()
+        self.result_label.setText("点击\"开始识别\"查看结果")
+        
+        self.status_bar.showMessage("滤镜已重置")
+    
+    def _get_current_display_image(self):
+        """获取当前显示的图像（原图或滤镜后的图像）"""
+        if self.filtered_image is not None:
+            return self.filtered_image
+        else:
+            return self.current_image
+
     def eventFilter(self, obj, event):
         """事件过滤器，处理输入法事件"""
         if obj == self.answer_input:
@@ -1092,9 +1598,9 @@ class MainWindow(QMainWindow):
 
 def main():
     # 在创建QApplication之前设置环境变量
-    os.environ.setdefault('QT_IM_MODULE', 'fcitx')  # 使用fcitx而不是fcitx5
-    os.environ.setdefault('XMODIFIERS', '@im=fcitx')
-    os.environ.setdefault('GTK_IM_MODULE', 'fcitx')
+    # os.environ.setdefault('QT_IM_MODULE', 'fcitx')  # 使用fcitx而不是fcitx5
+    # os.environ.setdefault('XMODIFIERS', '@im=fcitx')
+    # os.environ.setdefault('GTK_IM_MODULE', 'fcitx')
     
     app = QApplication(sys.argv)
     app.setStyle("Fusion")

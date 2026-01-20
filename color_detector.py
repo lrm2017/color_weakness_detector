@@ -10,6 +10,7 @@ import cv2
 import numpy as np
 import argparse
 from pathlib import Path
+from image_utils import imread_unicode, imwrite_unicode
 
 
 def get_warm_mask(hsv_image):
@@ -147,7 +148,7 @@ def process_image(image_path, output_path=None, min_area=100):
         处理后的图像
     """
     # 读取图像
-    image = cv2.imread(str(image_path))
+    image = imread_unicode(str(image_path))
     if image is None:
         raise ValueError(f"无法读取图像: {image_path}")
     
@@ -268,7 +269,7 @@ def process_image(image_path, output_path=None, min_area=100):
     
     # 保存结果
     if output_path:
-        cv2.imwrite(str(output_path), result)
+        imwrite_unicode(str(output_path), result)
         print(f"结果已保存到: {output_path}")
     
     return result
