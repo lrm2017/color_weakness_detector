@@ -33,8 +33,7 @@ IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.bmp', '.gif', '.webp', '.tiff', '
 
 # 程序目录
 APP_DIR = Path(__file__).parent.resolve()
-IMAGES_DIR = APP_DIR / "downloaded_images"
-WRONG_ANSWERS_DIR = IMAGES_DIR / "错题库"
+DEFAULT_IMAGES_DIR = APP_DIR / "downloaded_images"
 
 # 配置文件路径
 CONFIG_DIR = Path(QStandardPaths.writableLocation(QStandardPaths.AppConfigLocation)) / "color_weakness_detector"
@@ -180,6 +179,10 @@ class MainWindow(QMainWindow):
         # 启用输入法支持
         self.setAttribute(Qt.WA_InputMethodEnabled, True)
         
+        # 初始化图库路径
+        self.images_dir = DEFAULT_IMAGES_DIR
+        self.wrong_answers_dir = None
+        
         self.image_list = []
         self.current_index = -1
         self.current_image = None
@@ -194,8 +197,8 @@ class MainWindow(QMainWindow):
         
         self._setup_ui()
         self._connect_signals()
+        self._load_config()  # 先加载配置，获取图库路径
         self._load_gallery_list()
-        self._load_config()
     
     def _setup_ui(self):
         """设置UI"""
@@ -206,17 +209,47 @@ class MainWindow(QMainWindow):
         
         # === 顶部控制区 ===
         top_group = QGroupBox("图库选择")
-        top_layout = QHBoxLayout(top_group)
+        top_layout = QVBoxLayout(top_group)
         
-        top_layout.addWidget(QLabel("选择图库:"))
+        # 图库路径选择行
+        path_layout = QHBoxLayout()
+        path_layout.addWidget(QLabel("图库路径:"))
+        
+        self.path_label = QLabel()
+        self.path_label.setStyleSheet("""
+            QLabel {
+                background-color: #f5f5f5;
+                border: 1px solid #ccc;
+                padding: 5px;
+                border-radius: 3px;
+            }
+        """)
+        self.path_label.setMinimumWidth(300)
+        path_layout.addWidget(self.path_label, 1)
+        
+        self.browse_btn = QPushButton("浏览...")
+        self.browse_btn.setMinimumWidth(80)
+        self.browse_btn.clicked.connect(self._browse_images_dir)
+        path_layout.addWidget(self.browse_btn)
+        
+        self.reset_path_btn = QPushButton("重置为默认")
+        self.reset_path_btn.setMinimumWidth(100)
+        self.reset_path_btn.clicked.connect(self._reset_images_dir)
+        path_layout.addWidget(self.reset_path_btn)
+        
+        top_layout.addLayout(path_layout)
+        
+        # 图库选择行
+        gallery_layout = QHBoxLayout()
+        gallery_layout.addWidget(QLabel("选择图库:"))
         self.gallery_combo = QComboBox()
         self.gallery_combo.setMinimumWidth(200)
-        top_layout.addWidget(self.gallery_combo)
+        gallery_layout.addWidget(self.gallery_combo)
         
-        top_layout.addSpacing(20)
+        gallery_layout.addSpacing(20)
         
         # 练习模式选择
-        top_layout.addWidget(QLabel("练习模式:"))
+        gallery_layout.addWidget(QLabel("练习模式:"))
         self.mode_group = QButtonGroup(self)
         self.mode_sequential = QRadioButton("顺序")
         self.mode_random = QRadioButton("随机")
@@ -224,21 +257,23 @@ class MainWindow(QMainWindow):
         self.mode_group.addButton(self.mode_sequential, 0)
         self.mode_group.addButton(self.mode_random, 1)
         self.mode_group.buttonClicked.connect(self._on_mode_changed)
-        top_layout.addWidget(self.mode_sequential)
-        top_layout.addWidget(self.mode_random)
+        gallery_layout.addWidget(self.mode_sequential)
+        gallery_layout.addWidget(self.mode_random)
         
-        top_layout.addSpacing(20)
+        gallery_layout.addSpacing(20)
         
         # 统计显示
         self.stats_label = QLabel("正确: 0 | 错误: 0")
         self.stats_label.setStyleSheet("QLabel { font-weight: bold; color: #333; }")
-        top_layout.addWidget(self.stats_label)
+        gallery_layout.addWidget(self.stats_label)
         
         self.reset_stats_btn = QPushButton("重置统计")
         self.reset_stats_btn.clicked.connect(self._reset_stats)
-        top_layout.addWidget(self.reset_stats_btn)
+        gallery_layout.addWidget(self.reset_stats_btn)
         
-        top_layout.addStretch()
+        gallery_layout.addStretch()
+        
+        top_layout.addLayout(gallery_layout)
         
         main_layout.addWidget(top_group)
         
@@ -449,9 +484,78 @@ class MainWindow(QMainWindow):
         self.submit_btn.clicked.connect(self._submit_answer)
         self.answer_input.returnPressed.connect(self._submit_answer)
     
+    def _browse_images_dir(self):
+        """浏览选择图库目录"""
+        current_dir = str(self.images_dir) if self.images_dir.exists() else str(Path.home())
+        
+        new_dir = QFileDialog.getExistingDirectory(
+            self, 
+            "选择图库目录", 
+            current_dir,
+            QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks
+        )
+        
+        if new_dir:
+            self.images_dir = Path(new_dir)
+            self.wrong_answers_dir = self.images_dir / "错题库"
+            self._update_path_display()
+            self._load_gallery_list()
+            self._save_config()
+            self._reset_stats()  # 切换图库路径时重置统计
+            self.status_bar.showMessage(f"图库路径已更改为: {self.images_dir}")
+    
+    def _reset_images_dir(self):
+        """重置图库目录为默认路径"""
+        self.images_dir = DEFAULT_IMAGES_DIR
+        self.wrong_answers_dir = self.images_dir / "错题库"
+        self._update_path_display()
+        self._load_gallery_list()
+        self._save_config()
+        self._reset_stats()  # 重置路径时重置统计
+        self.status_bar.showMessage("图库路径已重置为默认")
+    
     def _on_mode_changed(self):
         """练习模式改变时保存配置"""
         self._save_config()
+    
+    def _browse_images_dir(self):
+        """浏览选择图库目录"""
+        current_dir = str(self.images_dir) if self.images_dir.exists() else str(Path.home())
+        
+        new_dir = QFileDialog.getExistingDirectory(
+            self, 
+            "选择图库目录", 
+            current_dir,
+            QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks
+        )
+        
+        if new_dir:
+            self.images_dir = Path(new_dir)
+            self.wrong_answers_dir = self.images_dir / "错题库"
+            self._update_path_display()
+            self._load_gallery_list()
+            self._save_config()
+            self._reset_stats()  # 切换图库路径时重置统计
+            self.status_bar.showMessage(f"图库路径已更改为: {self.images_dir}")
+    
+    def _reset_images_dir(self):
+        """重置图库目录为默认路径"""
+        self.images_dir = DEFAULT_IMAGES_DIR
+        self.wrong_answers_dir = self.images_dir / "错题库"
+        self._update_path_display()
+        self._load_gallery_list()
+        self._save_config()
+        self._reset_stats()  # 重置路径时重置统计
+        self.status_bar.showMessage("图库路径已重置为默认")
+    
+    def _update_path_display(self):
+        """更新路径显示"""
+        path_text = str(self.images_dir)
+        # 如果路径太长，显示省略号
+        if len(path_text) > 50:
+            path_text = "..." + path_text[-47:]
+        self.path_label.setText(path_text)
+        self.path_label.setToolTip(str(self.images_dir))  # 完整路径作为提示
     
     def _insert_symbol(self, symbol):
         """插入符号到答案输入框"""
@@ -551,11 +655,14 @@ class MainWindow(QMainWindow):
         self.gallery_combo.clear()
         self.gallery_combo.addItem("-- 请选择图库 --", "")
         
-        if IMAGES_DIR.exists():
-            WRONG_ANSWERS_DIR.mkdir(exist_ok=True)
+        if self.images_dir.exists():
+            # 确保错题库目录存在
+            if self.wrong_answers_dir is None:
+                self.wrong_answers_dir = self.images_dir / "错题库"
+            self.wrong_answers_dir.mkdir(exist_ok=True)
             
             dirs = sorted([
-                d for d in IMAGES_DIR.iterdir()
+                d for d in self.images_dir.iterdir()
                 if d.is_dir() and d.name != "backup_original"
             ])
             
@@ -570,6 +677,20 @@ class MainWindow(QMainWindow):
                     count = len([f for f in d.iterdir() 
                                if f.is_file() and f.suffix.lower() in IMAGE_EXTENSIONS])
                     self.gallery_combo.addItem(f"{d.name} ({count}张)", str(d))
+        else:
+            # 图库目录不存在时的提示
+            self.gallery_combo.addItem("-- 图库目录不存在 --", "")
+            self.status_bar.showMessage(f"图库目录不存在: {self.images_dir}")
+        
+        # 更新路径显示
+        self._update_path_display()
+        
+        # 恢复上次选择的图库
+        if hasattr(self, 'last_gallery') and self.last_gallery:
+            for i in range(self.gallery_combo.count()):
+                if self.gallery_combo.itemData(i) == self.last_gallery:
+                    self.gallery_combo.setCurrentIndex(i)
+                    break
     
     def _on_gallery_changed(self, index):
         """图库选择变化"""
@@ -585,12 +706,15 @@ class MainWindow(QMainWindow):
             try:
                 with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
                     config = json.load(f)
-                last_gallery = config.get('last_gallery', '')
-                if last_gallery:
-                    for i in range(self.gallery_combo.count()):
-                        if self.gallery_combo.itemData(i) == last_gallery:
-                            self.gallery_combo.setCurrentIndex(i)
-                            break
+                
+                # 加载图库路径
+                images_dir_str = config.get('images_dir', '')
+                if images_dir_str and Path(images_dir_str).exists():
+                    self.images_dir = Path(images_dir_str)
+                else:
+                    self.images_dir = DEFAULT_IMAGES_DIR
+                
+                self.wrong_answers_dir = self.images_dir / "错题库"
                 
                 # 恢复统计数据
                 self.correct_count = config.get('correct_count', 0)
@@ -603,15 +727,26 @@ class MainWindow(QMainWindow):
                     self.mode_random.setChecked(True)
                 else:
                     self.mode_sequential.setChecked(True)
+                
+                # 恢复上次选择的图库（在加载图库列表后处理）
+                self.last_gallery = config.get('last_gallery', '')
                     
             except Exception as e:
                 print(f"加载配置失败: {e}")
+                self.images_dir = DEFAULT_IMAGES_DIR
+                self.wrong_answers_dir = self.images_dir / "错题库"
+                self.last_gallery = ''
+        else:
+            self.images_dir = DEFAULT_IMAGES_DIR
+            self.wrong_answers_dir = self.images_dir / "错题库"
+            self.last_gallery = ''
     
     def _save_config(self):
         """保存配置"""
         try:
             CONFIG_DIR.mkdir(parents=True, exist_ok=True)
             config = {
+                'images_dir': str(self.images_dir),
                 'last_gallery': self.gallery_combo.currentData() or '',
                 'last_image_index': self.current_index if self.current_index >= 0 else 0,
                 'correct_count': self.correct_count,
@@ -783,7 +918,7 @@ class MainWindow(QMainWindow):
         if self.current_image_path is None:
             return
         
-        WRONG_ANSWERS_DIR.mkdir(exist_ok=True)
+        self.wrong_answers_dir.mkdir(exist_ok=True)
         
         src_path = self.current_image_path
         src_dir_name = src_path.parent.name
@@ -795,7 +930,7 @@ class MainWindow(QMainWindow):
             return
         
         new_filename = f"{src_dir_name}_{src_path.name}"
-        dst_path = WRONG_ANSWERS_DIR / new_filename
+        dst_path = self.wrong_answers_dir / new_filename
         
         if dst_path.exists():
             if not silent:
@@ -808,7 +943,7 @@ class MainWindow(QMainWindow):
             filename = src_path.name
             answer = self.answers_data.get(filename, "")
             if answer:
-                wrong_answers_file = WRONG_ANSWERS_DIR / 'answers.json'
+                wrong_answers_file = self.wrong_answers_dir / 'answers.json'
                 wrong_data = []
                 if wrong_answers_file.exists():
                     with open(wrong_answers_file, 'r', encoding='utf-8') as f:
