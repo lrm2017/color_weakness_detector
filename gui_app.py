@@ -414,6 +414,21 @@ class MainWindow(QMainWindow):
         """)
         input_layout.addWidget(self.add_wrong_btn)
         
+        self.remove_wrong_btn = QPushButton("移出错题库")
+        self.remove_wrong_btn.setMinimumWidth(100)
+        self.remove_wrong_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #FF9800;
+                color: white;
+                font-weight: bold;
+                padding: 8px 16px;
+                border-radius: 4px;
+            }
+            QPushButton:hover { background-color: #F57C00; }
+            QPushButton:disabled { background-color: #cccccc; }
+        """)
+        input_layout.addWidget(self.remove_wrong_btn)
+        
         answer_layout.addLayout(input_layout)
         
         main_layout.addWidget(answer_group)
@@ -481,6 +496,7 @@ class MainWindow(QMainWindow):
         self.detect_btn.clicked.connect(self._detect)
         self.show_answer_btn.clicked.connect(self._toggle_answer)
         self.add_wrong_btn.clicked.connect(self._add_to_wrong_answers)
+        self.remove_wrong_btn.clicked.connect(self._remove_from_wrong_answers)
         self.submit_btn.clicked.connect(self._submit_answer)
         self.answer_input.returnPressed.connect(self._submit_answer)
     
@@ -913,6 +929,65 @@ class MainWindow(QMainWindow):
             self.answer_label.setStyleSheet("QLabel { color: #333; padding: 10px; }")
             self.show_answer_btn.setText("显示答案")
     
+    def _remove_from_wrong_answers(self):
+        """从错题库中移出"""
+        if self.current_image_path is None:
+            return
+        
+        src_path = self.current_image_path
+        src_dir_name = src_path.parent.name
+        
+        # 只有在错题库中才能移出
+        if src_dir_name != "错题库":
+            self.status_bar.showMessage("当前不在错题库中")
+            return
+        
+        # 确认对话框
+        reply = QMessageBox.question(
+            self, 
+            "确认移出", 
+            f"确定要将 '{src_path.name}' 从错题库中移出吗？",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No
+        )
+        
+        if reply != QMessageBox.Yes:
+            return
+        
+        try:
+            # 删除图片文件
+            src_path.unlink()
+            
+            # 从answers.json中移除对应记录
+            wrong_answers_file = self.wrong_answers_dir / 'answers.json'
+            if wrong_answers_file.exists():
+                with open(wrong_answers_file, 'r', encoding='utf-8') as f:
+                    wrong_data = json.load(f)
+                
+                # 过滤掉要删除的记录
+                wrong_data = [item for item in wrong_data if item.get('filename') != src_path.name]
+                
+                with open(wrong_answers_file, 'w', encoding='utf-8') as f:
+                    json.dump(wrong_data, f, ensure_ascii=False, indent=2)
+            
+            # 刷新图库列表
+            current_gallery = self.gallery_combo.currentData()
+            self.gallery_combo.blockSignals(True)
+            self._load_gallery_list()
+            for i in range(self.gallery_combo.count()):
+                if self.gallery_combo.itemData(i) == current_gallery:
+                    self.gallery_combo.setCurrentIndex(i)
+                    break
+            self.gallery_combo.blockSignals(False)
+            
+            # 重新加载当前文件夹
+            self._load_folder(current_gallery)
+            
+            self.status_bar.showMessage(f"已从错题库移出: {src_path.name}")
+            
+        except Exception as e:
+            QMessageBox.warning(self, "错误", f"移出错题库失败: {e}")
+    
     def _add_to_wrong_answers(self, silent=False):
         """加入错题库"""
         if self.current_image_path is None:
@@ -1002,7 +1077,12 @@ class MainWindow(QMainWindow):
         
         current_gallery = self.gallery_combo.currentData()
         is_wrong_answers = current_gallery and "错题库" in current_gallery
+        
+        # 加入错题库按钮：只有不在错题库中时才启用
         self.add_wrong_btn.setEnabled(has_current and not is_wrong_answers)
+        
+        # 移出错题库按钮：只有在错题库中时才启用
+        self.remove_wrong_btn.setEnabled(has_current and is_wrong_answers)
         
         if has_images:
             self.image_info_label.setText(f"{self.current_index + 1} / {len(self.image_list)}")
