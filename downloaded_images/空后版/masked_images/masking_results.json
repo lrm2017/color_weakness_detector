@@ -1,0 +1,552 @@
+[
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "五角星",
+        "confidence": 0.9817190166027271,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            65,
+            180
+          ],
+          [
+            126,
+            180
+          ],
+          [
+            126,
+            206
+          ],
+          [
+            65,
+            206
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "017.jpg",
+    "expected_answer": "五角星"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "7564",
+        "confidence": 0.9960097074508667,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            103,
+            285
+          ],
+          [
+            143,
+            285
+          ],
+          [
+            143,
+            305
+          ],
+          [
+            103,
+            305
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "010.jpg",
+    "expected_answer": "7564"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "4547",
+        "confidence": 0.9999815225601196,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            103,
+            286
+          ],
+          [
+            145,
+            286
+          ],
+          [
+            145,
+            306
+          ],
+          [
+            103,
+            306
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "009.jpg",
+    "expected_answer": "4547"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "95 63",
+        "confidence": 0.8608370160891409,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            105,
+            216
+          ],
+          [
+            157,
+            216
+          ],
+          [
+            157,
+            236
+          ],
+          [
+            105,
+            236
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "012.jpg",
+    "expected_answer": "63"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "4267",
+        "confidence": 0.9984819889068604,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            107,
+            227
+          ],
+          [
+            147,
+            227
+          ],
+          [
+            147,
+            247
+          ],
+          [
+            107,
+            247
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "008.jpg",
+    "expected_answer": "4267"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "296",
+        "confidence": 0.9969965088801064,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            117,
+            291
+          ],
+          [
+            147,
+            291
+          ],
+          [
+            147,
+            311
+          ],
+          [
+            117,
+            311
+          ]
+        ]
+      }
+    ],
+    "total_detected": 3,
+    "total_masked": 1,
+    "filename": "001.jpg",
+    "expected_answer": "296"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "2893",
+        "confidence": 0.983715526319096,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            103,
+            213
+          ],
+          [
+            155,
+            213
+          ],
+          [
+            155,
+            231
+          ],
+          [
+            103,
+            231
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "006.jpg",
+    "expected_answer": "93"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "826",
+        "confidence": 0.970082934408882,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            115,
+            296
+          ],
+          [
+            147,
+            296
+          ],
+          [
+            147,
+            316
+          ],
+          [
+            115,
+            316
+          ]
+        ]
+      }
+    ],
+    "total_detected": 1,
+    "total_masked": 1,
+    "filename": "004.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "高射炮",
+        "confidence": 0.9702128988147356,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            91,
+            264
+          ],
+          [
+            151,
+            264
+          ],
+          [
+            151,
+            288
+          ],
+          [
+            91,
+            288
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "015.jpg",
+    "expected_answer": "高射炮"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "76 49",
+        "confidence": 0.6645001741168308,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            99,
+            202
+          ],
+          [
+            149,
+            202
+          ],
+          [
+            149,
+            222
+          ],
+          [
+            99,
+            222
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "011.jpg",
+    "expected_answer": "49"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "754",
+        "confidence": 0.9999256688134786,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            117,
+            394
+          ],
+          [
+            147,
+            394
+          ],
+          [
+            147,
+            412
+          ],
+          [
+            117,
+            412
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "002.jpg",
+    "expected_answer": "754"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "003.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "3172",
+        "confidence": 0.9999532103538513,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            109,
+            279
+          ],
+          [
+            149,
+            279
+          ],
+          [
+            149,
+            299
+          ],
+          [
+            109,
+            299
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "007.jpg",
+    "expected_answer": "3172"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "68",
+        "confidence": 0.9254844882452317,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            125,
+            287
+          ],
+          [
+            147,
+            287
+          ],
+          [
+            147,
+            305
+          ],
+          [
+            125,
+            305
+          ]
+        ]
+      }
+    ],
+    "total_detected": 1,
+    "total_masked": 1,
+    "filename": "005.jpg",
+    "expected_answer": "968"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "805",
+        "confidence": 0.9854955657370551,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            101,
+            290
+          ],
+          [
+            131,
+            290
+          ],
+          [
+            131,
+            310
+          ],
+          [
+            101,
+            310
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "013.jpg",
+    "expected_answer": "805"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "289  346",
+        "confidence": 0.6076883616599039,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            90,
+            299
+          ],
+          [
+            155,
+            299
+          ],
+          [
+            155,
+            319
+          ],
+          [
+            90,
+            319
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "014.jpg",
+    "expected_answer": "346"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "舰艇",
+        "confidence": 0.9967197714763775,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            102,
+            240
+          ],
+          [
+            144,
+            240
+          ],
+          [
+            144,
+            264
+          ],
+          [
+            102,
+            264
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "016.jpg",
+    "expected_answer": "舰艇"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "直升机",
+        "confidence": 0.9695992899006385,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            92,
+            253
+          ],
+          [
+            152,
+            253
+          ],
+          [
+            152,
+            277
+          ],
+          [
+            92,
+            277
+          ]
+        ]
+      }
+    ],
+    "total_detected": 6,
+    "total_masked": 1,
+    "filename": "018.jpg",
+    "expected_answer": "直升机"
+  }
+]

@@ -1,0 +1,444 @@
+[
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "025.jpg",
+    "expected_answer": "83查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "017.jpg",
+    "expected_answer": "835查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "058.jpg",
+    "expected_answer": "马查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "010.jpg",
+    "expected_answer": "5查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "044.jpg",
+    "expected_answer": "W查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "009.jpg",
+    "expected_answer": "8/0/6查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "023.jpg",
+    "expected_answer": "9查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "040.jpg",
+    "expected_answer": "P查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "012.jpg",
+    "expected_answer": "8查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "036.jpg",
+    "expected_answer": "10查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "008.jpg",
+    "expected_answer": "85查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "050.jpg",
+    "expected_answer": "D查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "047.jpg",
+    "expected_answer": "F查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "048.jpg",
+    "expected_answer": "K查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "031.jpg",
+    "expected_answer": "6查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "022.jpg",
+    "expected_answer": "8查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "056.jpg",
+    "expected_answer": "金鱼查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "026.jpg",
+    "expected_answer": "6查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "001.jpg",
+    "expected_answer": "6查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "024.jpg",
+    "expected_answer": "5查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "042.jpg",
+    "expected_answer": "M查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "021.jpg",
+    "expected_answer": "652查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "052.jpg",
+    "expected_answer": "燕子查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "033.jpg",
+    "expected_answer": "4查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "038.jpg",
+    "expected_answer": "3查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "049.jpg",
+    "expected_answer": "V查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "051.jpg",
+    "expected_answer": "H查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "030.jpg",
+    "expected_answer": "56查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "006.jpg",
+    "expected_answer": "66查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "063.jpg",
+    "expected_answer": "鹿查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "698",
+        "confidence": 0.8896592374849499,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            101,
+            269
+          ],
+          [
+            133,
+            269
+          ],
+          [
+            133,
+            289
+          ],
+          [
+            101,
+            289
+          ]
+        ]
+      }
+    ],
+    "total_detected": 2,
+    "total_masked": 1,
+    "filename": "004.jpg",
+    "expected_answer": "698查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "032.jpg",
+    "expected_answer": "2查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "035.jpg",
+    "expected_answer": "2查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "015.jpg",
+    "expected_answer": "8查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "011.jpg",
+    "expected_answer": "9查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "020.jpg",
+    "expected_answer": "8查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "002.jpg",
+    "expected_answer": "99查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "039.jpg",
+    "expected_answer": "RY查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "027.jpg",
+    "expected_answer": "3查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "034.jpg",
+    "expected_answer": "9查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "003.jpg",
+    "expected_answer": "896查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "007.jpg",
+    "expected_answer": "36查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "043.jpg",
+    "expected_answer": "B查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "96",
+        "confidence": 0.9180834767560457,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            93,
+            272
+          ],
+          [
+            115,
+            272
+          ],
+          [
+            115,
+            288
+          ],
+          [
+            93,
+            288
+          ]
+        ]
+      }
+    ],
+    "total_detected": 1,
+    "total_masked": 1,
+    "filename": "005.jpg",
+    "expected_answer": "80/96查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "065.jpg",
+    "expected_answer": "牛查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "053.jpg",
+    "expected_answer": "兔子、鸭查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "060.jpg",
+    "expected_answer": "母鸡查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "046.jpg",
+    "expected_answer": "BE查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "064.jpg",
+    "expected_answer": "蝴蝶查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "029.jpg",
+    "expected_answer": "8查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "028.jpg",
+    "expected_answer": "5查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "062.jpg",
+    "expected_answer": "鸽子查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "041.jpg",
+    "expected_answer": "E查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "019.jpg",
+    "expected_answer": "5查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "013.jpg",
+    "expected_answer": "689查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "014.jpg",
+    "expected_answer": "5查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "037.jpg",
+    "expected_answer": "5查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "061.jpg",
+    "expected_answer": "鸭子查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "054.jpg",
+    "expected_answer": "马查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "016.jpg",
+    "expected_answer": "6查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "057.jpg",
+    "expected_answer": "鸟查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "045.jpg",
+    "expected_answer": "A查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "055.jpg",
+    "expected_answer": "公鸡查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "059.jpg",
+    "expected_answer": "燕子查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "018.jpg",
+    "expected_answer": "3查看色弱滤镜"
+  }
+]

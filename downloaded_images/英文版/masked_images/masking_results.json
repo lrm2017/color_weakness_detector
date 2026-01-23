@@ -1,0 +1,698 @@
+[
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "025.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "73",
+        "confidence": 0.9995899357937278,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            97,
+            258
+          ],
+          [
+            121,
+            258
+          ],
+          [
+            121,
+            278
+          ],
+          [
+            97,
+            278
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "017.jpg",
+    "expected_answer": "73"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "10",
+        "confidence": 0.999203433224463,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            3,
+            291
+          ],
+          [
+            29,
+            291
+          ],
+          [
+            29,
+            311
+          ],
+          [
+            3,
+            311
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "010.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "009.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "023.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "12",
+        "confidence": 0.9999763978464146,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            0,
+            311
+          ],
+          [
+            25,
+            311
+          ],
+          [
+            25,
+            331
+          ],
+          [
+            0,
+            331
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "012.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "036.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "15",
+        "confidence": 0.997289180607652,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            97,
+            259
+          ],
+          [
+            121,
+            259
+          ],
+          [
+            121,
+            279
+          ],
+          [
+            97,
+            279
+          ]
+        ]
+      }
+    ],
+    "total_detected": 3,
+    "total_masked": 1,
+    "filename": "008.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "031.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "022.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "026.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "001.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "024.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "无内容",
+        "confidence": 0.410026504895335,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            67,
+            254
+          ],
+          [
+            111,
+            254
+          ],
+          [
+            111,
+            274
+          ],
+          [
+            67,
+            274
+          ]
+        ]
+      }
+    ],
+    "total_detected": 2,
+    "total_masked": 1,
+    "filename": "021.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "033.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "038.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "030.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "006.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "29",
+        "confidence": 0.9999697386968789,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            94,
+            260
+          ],
+          [
+            120,
+            260
+          ],
+          [
+            120,
+            284
+          ],
+          [
+            94,
+            284
+          ]
+        ]
+      }
+    ],
+    "total_detected": 2,
+    "total_masked": 1,
+    "filename": "004.jpg",
+    "expected_answer": "29"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "曲线",
+        "confidence": 0.7179204202635707,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            75,
+            200
+          ],
+          [
+            105,
+            200
+          ],
+          [
+            105,
+            216
+          ],
+          [
+            75,
+            216
+          ]
+        ]
+      }
+    ],
+    "total_detected": 2,
+    "total_masked": 1,
+    "filename": "032.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "曲线",
+        "confidence": 0.3348319515173447,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            75,
+            199
+          ],
+          [
+            105,
+            199
+          ],
+          [
+            105,
+            215
+          ],
+          [
+            75,
+            215
+          ]
+        ]
+      }
+    ],
+    "total_detected": 1,
+    "total_masked": 1,
+    "filename": "035.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "15",
+        "confidence": 0.609508216381073,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            0,
+            261
+          ],
+          [
+            30,
+            261
+          ],
+          [
+            30,
+            285
+          ],
+          [
+            0,
+            285
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "015.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "11",
+        "confidence": 0.9959349162099456,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            1,
+            298
+          ],
+          [
+            25,
+            298
+          ],
+          [
+            25,
+            316
+          ],
+          [
+            1,
+            316
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "011.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "无内容",
+        "confidence": 0.35352175398161734,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            78,
+            254
+          ],
+          [
+            138,
+            254
+          ],
+          [
+            138,
+            278
+          ],
+          [
+            78,
+            278
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "020.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "002.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "027.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "034.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "003.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "007.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "005.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "无内容",
+        "confidence": 0.8941737824236734,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            67,
+            201
+          ],
+          [
+            111,
+            201
+          ],
+          [
+            111,
+            221
+          ],
+          [
+            67,
+            221
+          ]
+        ]
+      }
+    ],
+    "total_detected": 3,
+    "total_masked": 1,
+    "filename": "029.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "无内容",
+        "confidence": 0.8483534576576386,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            69,
+            192
+          ],
+          [
+            111,
+            192
+          ],
+          [
+            111,
+            212
+          ],
+          [
+            69,
+            212
+          ]
+        ]
+      }
+    ],
+    "total_detected": 3,
+    "total_masked": 1,
+    "filename": "028.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "无内容",
+        "confidence": 0.9528249047241696,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            80,
+            251
+          ],
+          [
+            138,
+            251
+          ],
+          [
+            138,
+            275
+          ],
+          [
+            80,
+            275
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "019.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "45",
+        "confidence": 0.9997525226756272,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            98,
+            297
+          ],
+          [
+            122,
+            297
+          ],
+          [
+            122,
+            315
+          ],
+          [
+            98,
+            315
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "013.jpg",
+    "expected_answer": "45"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "14",
+        "confidence": 0.999913852928511,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            0,
+            283
+          ],
+          [
+            25,
+            283
+          ],
+          [
+            25,
+            301
+          ],
+          [
+            0,
+            301
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "014.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "037.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "16",
+        "confidence": 0.9995040519150924,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            1,
+            257
+          ],
+          [
+            27,
+            257
+          ],
+          [
+            27,
+            277
+          ],
+          [
+            1,
+            277
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "016.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "18",
+        "confidence": 0.997542712428258,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            0,
+            252
+          ],
+          [
+            27,
+            252
+          ],
+          [
+            27,
+            272
+          ],
+          [
+            0,
+            272
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "018.jpg",
+    "expected_answer": "无内容"
+  }
+]

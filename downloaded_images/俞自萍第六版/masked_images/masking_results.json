@@ -1,0 +1,290 @@
+[
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "025.jpg",
+    "expected_answer": "羊"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "017.jpg",
+    "expected_answer": "大熊猫"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "010.jpg",
+    "expected_answer": "602"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "044.jpg",
+    "expected_answer": "21"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "009.jpg",
+    "expected_answer": "628"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "023.jpg",
+    "expected_answer": "金鱼"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "040.jpg",
+    "expected_answer": "0/9"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "012.jpg",
+    "expected_answer": "985"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "036.jpg",
+    "expected_answer": "两颗星星"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "008.jpg",
+    "expected_answer": "56"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "047.jpg",
+    "expected_answer": "○/○"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "048.jpg",
+    "expected_answer": "□/△"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "031.jpg",
+    "expected_answer": "单色图-红色"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "022.jpg",
+    "expected_answer": "鹅"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "026.jpg",
+    "expected_answer": "兔子"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "001.jpg",
+    "expected_answer": "606"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "024.jpg",
+    "expected_answer": "燕子"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "042.jpg",
+    "expected_answer": "86"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "021.jpg",
+    "expected_answer": "蜻蜓"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "033.jpg",
+    "expected_answer": "单色图-蓝色"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "038.jpg",
+    "expected_answer": "825"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "030.jpg",
+    "expected_answer": "621/989"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "006.jpg",
+    "expected_answer": "162"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "004.jpg",
+    "expected_answer": "88"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "032.jpg",
+    "expected_answer": "单色图-黄色"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "035.jpg",
+    "expected_answer": "单色图-紫色"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "015.jpg",
+    "expected_answer": "2901"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "011.jpg",
+    "expected_answer": "268"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "020.jpg",
+    "expected_answer": "牛"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "002.jpg",
+    "expected_answer": "兔子"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "039.jpg",
+    "expected_answer": "58"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "027.jpg",
+    "expected_answer": "蝴蝶"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "034.jpg",
+    "expected_answer": "单色图-绿色"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "003.jpg",
+    "expected_answer": "69"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "007.jpg",
+    "expected_answer": "916"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "043.jpg",
+    "expected_answer": "壶"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "005.jpg",
+    "expected_answer": "60"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "046.jpg",
+    "expected_answer": "69"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "029.jpg",
+    "expected_answer": "899/022"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "028.jpg",
+    "expected_answer": "○/剪刀"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "041.jpg",
+    "expected_answer": "△/□"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "019.jpg",
+    "expected_answer": "○"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "013.jpg",
+    "expected_answer": "6289"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "014.jpg",
+    "expected_answer": "6098"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "037.jpg",
+    "expected_answer": "522"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "016.jpg",
+    "expected_answer": "8609"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "045.jpg",
+    "expected_answer": "52"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "018.jpg",
+    "expected_answer": "△/○"
+  }
+]

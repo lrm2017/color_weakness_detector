@@ -1,0 +1,166 @@
+[
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "42",
+        "confidence": 0.9999942680334141,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            95,
+            297
+          ],
+          [
+            119,
+            297
+          ],
+          [
+            119,
+            317
+          ],
+          [
+            95,
+            317
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "010.jpg",
+    "expected_answer": "42"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "26",
+        "confidence": 0.9959227924122889,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            89,
+            305
+          ],
+          [
+            111,
+            305
+          ],
+          [
+            111,
+            325
+          ],
+          [
+            89,
+            325
+          ]
+        ]
+      }
+    ],
+    "total_detected": 2,
+    "total_masked": 1,
+    "filename": "009.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "无",
+        "confidence": 0.9829226592555642,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            71,
+            310
+          ],
+          [
+            93,
+            310
+          ],
+          [
+            93,
+            330
+          ],
+          [
+            71,
+            330
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "008.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "12",
+        "confidence": 0.9999764821395298,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            89,
+            271
+          ],
+          [
+            113,
+            271
+          ],
+          [
+            113,
+            291
+          ],
+          [
+            89,
+            291
+          ]
+        ]
+      }
+    ],
+    "total_detected": 3,
+    "total_masked": 1,
+    "filename": "001.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "006.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "004.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "002.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "003.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "007.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "005.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  }
+]

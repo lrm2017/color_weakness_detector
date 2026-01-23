@@ -1,0 +1,1576 @@
+[
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "25",
+        "confidence": 0.9999723517793255,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            9,
+            385
+          ],
+          [
+            33,
+            385
+          ],
+          [
+            33,
+            405
+          ],
+          [
+            9,
+            405
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "025.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "17",
+        "confidence": 0.9995225096026437,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            394
+          ],
+          [
+            31,
+            394
+          ],
+          [
+            31,
+            414
+          ],
+          [
+            7,
+            414
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "017.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "三角",
+        "confidence": 0.9933644604600218,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            122,
+            386
+          ],
+          [
+            164,
+            386
+          ],
+          [
+            164,
+            410
+          ],
+          [
+            122,
+            410
+          ]
+        ]
+      }
+    ],
+    "total_detected": 10,
+    "total_masked": 1,
+    "filename": "010.jpg",
+    "expected_answer": "三角"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "44",
+        "confidence": 0.9999985670074514,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            13,
+            390
+          ],
+          [
+            35,
+            390
+          ],
+          [
+            35,
+            408
+          ],
+          [
+            13,
+            408
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "044.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": false,
+    "error": "未检测到文字区域",
+    "filename": "009.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "93",
+        "confidence": 0.9999576848263233,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            87,
+            397
+          ],
+          [
+            109,
+            397
+          ],
+          [
+            109,
+            417
+          ],
+          [
+            87,
+            417
+          ]
+        ]
+      }
+    ],
+    "total_detected": 6,
+    "total_masked": 1,
+    "filename": "023.jpg",
+    "expected_answer": "93"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "40",
+        "confidence": 0.9699415939108273,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            386
+          ],
+          [
+            33,
+            386
+          ],
+          [
+            33,
+            404
+          ],
+          [
+            7,
+            404
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "040.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "12",
+        "confidence": 0.9991483184573288,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            391
+          ],
+          [
+            31,
+            391
+          ],
+          [
+            31,
+            411
+          ],
+          [
+            7,
+            411
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "012.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "36",
+        "confidence": 0.9998975004030821,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            11,
+            394
+          ],
+          [
+            35,
+            394
+          ],
+          [
+            35,
+            414
+          ],
+          [
+            11,
+            414
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "036.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "三角",
+        "confidence": 0.9909032209319188,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            124,
+            391
+          ],
+          [
+            166,
+            391
+          ],
+          [
+            166,
+            415
+          ],
+          [
+            124,
+            415
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "008.jpg",
+    "expected_answer": "三角"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "内容",
+        "confidence": 0.9778645998143048,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            92,
+            382
+          ],
+          [
+            130,
+            382
+          ],
+          [
+            130,
+            406
+          ],
+          [
+            92,
+            406
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "050.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "曲线",
+        "confidence": 0.814036582668237,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            90,
+            386
+          ],
+          [
+            132,
+            386
+          ],
+          [
+            132,
+            410
+          ],
+          [
+            90,
+            410
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "047.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "线",
+        "confidence": 0.9856132526551988,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            93,
+            389
+          ],
+          [
+            121,
+            389
+          ],
+          [
+            121,
+            413
+          ],
+          [
+            93,
+            413
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "048.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "大山",
+        "confidence": 0.9499189462830181,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            70,
+            393
+          ],
+          [
+            130,
+            393
+          ],
+          [
+            130,
+            417
+          ],
+          [
+            70,
+            417
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "031.jpg",
+    "expected_answer": "大"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "22",
+        "confidence": 0.9999522901008393,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            394
+          ],
+          [
+            31,
+            394
+          ],
+          [
+            31,
+            414
+          ],
+          [
+            7,
+            414
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "022.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "26",
+        "confidence": 0.9998445659610409,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            395
+          ],
+          [
+            33,
+            395
+          ],
+          [
+            33,
+            415
+          ],
+          [
+            7,
+            415
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "026.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "五角星",
+        "confidence": 0.9874812760291771,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            122,
+            378
+          ],
+          [
+            198,
+            378
+          ],
+          [
+            198,
+            408
+          ],
+          [
+            122,
+            408
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "001.jpg",
+    "expected_answer": "五角星"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "容",
+        "confidence": 0.9911583273447064,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            84,
+            386
+          ],
+          [
+            128,
+            386
+          ],
+          [
+            128,
+            410
+          ],
+          [
+            84,
+            410
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "024.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "42",
+        "confidence": 0.999982972715661,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            19,
+            389
+          ],
+          [
+            45,
+            389
+          ],
+          [
+            45,
+            409
+          ],
+          [
+            19,
+            409
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "042.jpg",
+    "expected_answer": "D"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "21",
+        "confidence": 0.9994966351555182,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            5,
+            399
+          ],
+          [
+            29,
+            399
+          ],
+          [
+            29,
+            419
+          ],
+          [
+            5,
+            419
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "021.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "33",
+        "confidence": 0.9999861758616755,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            11,
+            386
+          ],
+          [
+            35,
+            386
+          ],
+          [
+            35,
+            406
+          ],
+          [
+            11,
+            406
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "033.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "W",
+        "confidence": 0.8808750869527024,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            88,
+            388
+          ],
+          [
+            110,
+            388
+          ],
+          [
+            110,
+            408
+          ],
+          [
+            88,
+            408
+          ]
+        ]
+      }
+    ],
+    "total_detected": 6,
+    "total_masked": 1,
+    "filename": "038.jpg",
+    "expected_answer": "W"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "两条曲线",
+        "confidence": 0.8872843980789185,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            64,
+            386
+          ],
+          [
+            139,
+            386
+          ],
+          [
+            139,
+            410
+          ],
+          [
+            64,
+            410
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "049.jpg",
+    "expected_answer": "两条曲线"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "30",
+        "confidence": 0.9999772407776616,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            392
+          ],
+          [
+            31,
+            392
+          ],
+          [
+            31,
+            412
+          ],
+          [
+            7,
+            412
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "030.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "三角",
+        "confidence": 0.9919862790151558,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            126,
+            389
+          ],
+          [
+            164,
+            389
+          ],
+          [
+            164,
+            413
+          ],
+          [
+            126,
+            413
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "006.jpg",
+    "expected_answer": "三角"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "两个圆圈相扣",
+        "confidence": 0.9513869941022748,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            56,
+            389
+          ],
+          [
+            167,
+            389
+          ],
+          [
+            167,
+            413
+          ],
+          [
+            56,
+            413
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "004.jpg",
+    "expected_answer": "相扣"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "32",
+        "confidence": 0.999988873250124,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            391
+          ],
+          [
+            31,
+            391
+          ],
+          [
+            31,
+            411
+          ],
+          [
+            7,
+            411
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "032.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "35",
+        "confidence": 0.9999791795203197,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            393
+          ],
+          [
+            33,
+            393
+          ],
+          [
+            33,
+            411
+          ],
+          [
+            7,
+            411
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "035.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "15",
+        "confidence": 0.9993750194541416,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            391
+          ],
+          [
+            31,
+            391
+          ],
+          [
+            31,
+            411
+          ],
+          [
+            7,
+            411
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "015.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "无",
+        "confidence": 0.9702030705499034,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            96,
+            387
+          ],
+          [
+            124,
+            387
+          ],
+          [
+            124,
+            411
+          ],
+          [
+            96,
+            411
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "011.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "20",
+        "confidence": 0.9999708345054034,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            11,
+            385
+          ],
+          [
+            35,
+            385
+          ],
+          [
+            35,
+            405
+          ],
+          [
+            11,
+            405
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "020.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "圆圈",
+        "confidence": 0.961037407032074,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            105,
+            386
+          ],
+          [
+            141,
+            386
+          ],
+          [
+            141,
+            406
+          ],
+          [
+            105,
+            406
+          ]
+        ]
+      }
+    ],
+    "total_detected": 1,
+    "total_masked": 1,
+    "filename": "002.jpg",
+    "expected_answer": "圆圈"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "39",
+        "confidence": 0.9995660836263578,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            11,
+            393
+          ],
+          [
+            35,
+            393
+          ],
+          [
+            35,
+            411
+          ],
+          [
+            11,
+            411
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "039.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "天",
+        "confidence": 0.9578908732251534,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            89,
+            389
+          ],
+          [
+            113,
+            389
+          ],
+          [
+            113,
+            409
+          ],
+          [
+            89,
+            409
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "027.jpg",
+    "expected_answer": "天"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "内容",
+        "confidence": 0.980383613220063,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            83,
+            386
+          ],
+          [
+            131,
+            386
+          ],
+          [
+            131,
+            410
+          ],
+          [
+            83,
+            410
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "034.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "三角",
+        "confidence": 0.9934343727834766,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            106,
+            383
+          ],
+          [
+            144,
+            383
+          ],
+          [
+            144,
+            407
+          ],
+          [
+            106,
+            407
+          ]
+        ]
+      }
+    ],
+    "total_detected": 3,
+    "total_masked": 1,
+    "filename": "003.jpg",
+    "expected_answer": "三角"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "扇形",
+        "confidence": 0.9903137848117521,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            98,
+            385
+          ],
+          [
+            138,
+            385
+          ],
+          [
+            138,
+            409
+          ],
+          [
+            98,
+            409
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "007.jpg",
+    "expected_answer": "扇形"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "43",
+        "confidence": 0.9655078393126559,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            11,
+            387
+          ],
+          [
+            35,
+            387
+          ],
+          [
+            35,
+            407
+          ],
+          [
+            11,
+            407
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "043.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "五角星",
+        "confidence": 0.9495202551162111,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            87,
+            386
+          ],
+          [
+            146,
+            386
+          ],
+          [
+            146,
+            414
+          ],
+          [
+            87,
+            414
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "005.jpg",
+    "expected_answer": "五角星"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "曲线",
+        "confidence": 0.710084553447497,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            78,
+            385
+          ],
+          [
+            118,
+            385
+          ],
+          [
+            118,
+            409
+          ],
+          [
+            78,
+            409
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "046.jpg",
+    "expected_answer": "曲线"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "元",
+        "confidence": 0.9936845196126711,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            87,
+            389
+          ],
+          [
+            109,
+            389
+          ],
+          [
+            109,
+            409
+          ],
+          [
+            87,
+            409
+          ]
+        ]
+      }
+    ],
+    "total_detected": 6,
+    "total_masked": 1,
+    "filename": "029.jpg",
+    "expected_answer": "元"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "28",
+        "confidence": 0.9992233219523379,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            391
+          ],
+          [
+            33,
+            391
+          ],
+          [
+            33,
+            411
+          ],
+          [
+            7,
+            411
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "028.jpg",
+    "expected_answer": "士"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "41",
+        "confidence": 0.9973391274101684,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            394
+          ],
+          [
+            31,
+            394
+          ],
+          [
+            31,
+            414
+          ],
+          [
+            7,
+            414
+          ]
+        ]
+      }
+    ],
+    "total_detected": 3,
+    "total_masked": 1,
+    "filename": "041.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "19",
+        "confidence": 0.9998504662562905,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            400
+          ],
+          [
+            33,
+            400
+          ],
+          [
+            33,
+            418
+          ],
+          [
+            7,
+            418
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "019.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "13",
+        "confidence": 0.9997700545386441,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            13,
+            396
+          ],
+          [
+            37,
+            396
+          ],
+          [
+            37,
+            416
+          ],
+          [
+            13,
+            416
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "013.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "14",
+        "confidence": 0.999982635542571,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            13,
+            390
+          ],
+          [
+            37,
+            390
+          ],
+          [
+            37,
+            408
+          ],
+          [
+            13,
+            408
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "014.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "37",
+        "confidence": 0.999954734584768,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            9,
+            397
+          ],
+          [
+            35,
+            397
+          ],
+          [
+            35,
+            417
+          ],
+          [
+            9,
+            417
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "037.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "16",
+        "confidence": 0.9995171155649069,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            9,
+            386
+          ],
+          [
+            35,
+            386
+          ],
+          [
+            35,
+            406
+          ],
+          [
+            9,
+            406
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "016.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "无内容",
+        "confidence": 0.9793694497851798,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            72,
+            383
+          ],
+          [
+            130,
+            383
+          ],
+          [
+            130,
+            409
+          ],
+          [
+            72,
+            409
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "045.jpg",
+    "expected_answer": "无内容"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "18",
+        "confidence": 0.9978520299609018,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            390
+          ],
+          [
+            33,
+            390
+          ],
+          [
+            33,
+            410
+          ],
+          [
+            7,
+            410
+          ]
+        ]
+      }
+    ],
+    "total_detected": 6,
+    "total_masked": 1,
+    "filename": "018.jpg",
+    "expected_answer": "1查看色弱滤镜"
+  }
+]

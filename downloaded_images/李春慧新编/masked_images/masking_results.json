@@ -1,0 +1,1826 @@
+[
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "袋鼠",
+        "confidence": 0.9732387567723775,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            94,
+            423
+          ],
+          [
+            134,
+            423
+          ],
+          [
+            134,
+            447
+          ],
+          [
+            94,
+            447
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "025.jpg",
+    "expected_answer": "袋鼠"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "4284",
+        "confidence": 0.8199832328502932,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            83,
+            384
+          ],
+          [
+            125,
+            384
+          ],
+          [
+            125,
+            404
+          ],
+          [
+            83,
+            404
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "017.jpg",
+    "expected_answer": "4284"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "X",
+        "confidence": 0.9302678578374959,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            109,
+            395
+          ],
+          [
+            131,
+            395
+          ],
+          [
+            131,
+            413
+          ],
+          [
+            109,
+            413
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "058.jpg",
+    "expected_answer": "X"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "890",
+        "confidence": 0.9980692812288972,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            89,
+            416
+          ],
+          [
+            121,
+            416
+          ],
+          [
+            121,
+            436
+          ],
+          [
+            89,
+            436
+          ]
+        ]
+      }
+    ],
+    "total_detected": 6,
+    "total_masked": 1,
+    "filename": "010.jpg",
+    "expected_answer": "890"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "RED",
+        "confidence": 0.9990559801237122,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            105,
+            415
+          ],
+          [
+            139,
+            415
+          ],
+          [
+            139,
+            435
+          ],
+          [
+            105,
+            435
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "044.jpg",
+    "expected_answer": "RED"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "拖拉机",
+        "confidence": 0.7465114605128741,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            74,
+            435
+          ],
+          [
+            136,
+            435
+          ],
+          [
+            136,
+            459
+          ],
+          [
+            74,
+            459
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "009.jpg",
+    "expected_answer": "拖拉机"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "283",
+        "confidence": 0.9996512532234192,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            105,
+            418
+          ],
+          [
+            135,
+            418
+          ],
+          [
+            135,
+            436
+          ],
+          [
+            105,
+            436
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "023.jpg",
+    "expected_answer": "9283"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "军舰",
+        "confidence": 0.9952805455312932,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            97,
+            391
+          ],
+          [
+            137,
+            391
+          ],
+          [
+            137,
+            411
+          ],
+          [
+            97,
+            411
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "040.jpg",
+    "expected_answer": "军舰"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "12",
+        "confidence": 0.9998400143116737,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            375
+          ],
+          [
+            33,
+            375
+          ],
+          [
+            33,
+            395
+          ],
+          [
+            7,
+            395
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "012.jpg",
+    "expected_answer": "89"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "SUN",
+        "confidence": 0.9995630395949412,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            91,
+            393
+          ],
+          [
+            129,
+            393
+          ],
+          [
+            129,
+            413
+          ],
+          [
+            91,
+            413
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "036.jpg",
+    "expected_answer": "SUN"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "狼",
+        "confidence": 0.9868738320568724,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            110,
+            440
+          ],
+          [
+            132,
+            440
+          ],
+          [
+            132,
+            460
+          ],
+          [
+            110,
+            460
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "050.jpg",
+    "expected_answer": "狼"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "手枪",
+        "confidence": 0.9911704007926535,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            100,
+            429
+          ],
+          [
+            140,
+            429
+          ],
+          [
+            140,
+            453
+          ],
+          [
+            100,
+            453
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "047.jpg",
+    "expected_answer": "手枪"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "金鱼",
+        "confidence": 0.9682945059156874,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            107,
+            423
+          ],
+          [
+            145,
+            423
+          ],
+          [
+            145,
+            443
+          ],
+          [
+            107,
+            443
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "048.jpg",
+    "expected_answer": "金鱼"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "剪刀",
+        "confidence": 0.9922610294466723,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            97,
+            388
+          ],
+          [
+            135,
+            388
+          ],
+          [
+            135,
+            408
+          ],
+          [
+            97,
+            408
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "031.jpg",
+    "expected_answer": "剪刀"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "22",
+        "confidence": 0.9999799381590507,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            5,
+            442
+          ],
+          [
+            29,
+            442
+          ],
+          [
+            29,
+            462
+          ],
+          [
+            5,
+            462
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "022.jpg",
+    "expected_answer": "22"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "K",
+        "confidence": 0.9830273757419405,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            111,
+            367
+          ],
+          [
+            135,
+            367
+          ],
+          [
+            135,
+            385
+          ],
+          [
+            111,
+            385
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "056.jpg",
+    "expected_answer": "KX"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "823",
+        "confidence": 0.9997703327887577,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            99,
+            378
+          ],
+          [
+            131,
+            378
+          ],
+          [
+            131,
+            398
+          ],
+          [
+            99,
+            398
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "026.jpg",
+    "expected_answer": "823"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "熊猫",
+        "confidence": 0.7610265058409247,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            86,
+            441
+          ],
+          [
+            126,
+            441
+          ],
+          [
+            126,
+            465
+          ],
+          [
+            86,
+            465
+          ]
+        ]
+      }
+    ],
+    "total_detected": 2,
+    "total_masked": 1,
+    "filename": "001.jpg",
+    "expected_answer": "熊猫"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "9068",
+        "confidence": 0.9976193308830261,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            93,
+            417
+          ],
+          [
+            133,
+            417
+          ],
+          [
+            133,
+            437
+          ],
+          [
+            93,
+            437
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "024.jpg",
+    "expected_answer": "9068"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "飞机",
+        "confidence": 0.9242092243307624,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            111,
+            442
+          ],
+          [
+            141,
+            442
+          ],
+          [
+            141,
+            462
+          ],
+          [
+            111,
+            462
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "042.jpg",
+    "expected_answer": "飞机"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "PEACE",
+        "confidence": 0.9990925808966321,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            90,
+            422
+          ],
+          [
+            146,
+            422
+          ],
+          [
+            146,
+            446
+          ],
+          [
+            90,
+            446
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "021.jpg",
+    "expected_answer": "PEACE"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "35/62",
+        "confidence": 0.9988048202270716,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            99,
+            368
+          ],
+          [
+            147,
+            368
+          ],
+          [
+            147,
+            388
+          ],
+          [
+            99,
+            388
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "052.jpg",
+    "expected_answer": "62"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "老虎",
+        "confidence": 0.968362143212998,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            100,
+            439
+          ],
+          [
+            142,
+            439
+          ],
+          [
+            142,
+            463
+          ],
+          [
+            100,
+            463
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "033.jpg",
+    "expected_answer": "老虎"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "羚羊",
+        "confidence": 0.9688823286128188,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            104,
+            451
+          ],
+          [
+            146,
+            451
+          ],
+          [
+            146,
+            475
+          ],
+          [
+            104,
+            475
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "038.jpg",
+    "expected_answer": "羊"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "摩托车",
+        "confidence": 0.9421452237469382,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            90,
+            424
+          ],
+          [
+            150,
+            424
+          ],
+          [
+            150,
+            448
+          ],
+          [
+            90,
+            448
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "049.jpg",
+    "expected_answer": "摩托车"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "56/89",
+        "confidence": 0.9882447804403228,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            99,
+            361
+          ],
+          [
+            147,
+            361
+          ],
+          [
+            147,
+            381
+          ],
+          [
+            99,
+            381
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "051.jpg",
+    "expected_answer": "89"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "HT",
+        "confidence": 0.9115227060826697,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            103,
+            374
+          ],
+          [
+            127,
+            374
+          ],
+          [
+            127,
+            392
+          ],
+          [
+            103,
+            392
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "030.jpg",
+    "expected_answer": "HT"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "ABC",
+        "confidence": 0.9927158367552961,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            91,
+            443
+          ],
+          [
+            127,
+            443
+          ],
+          [
+            127,
+            461
+          ],
+          [
+            91,
+            461
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "004.jpg",
+    "expected_answer": "ABC"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "BLUE",
+        "confidence": 0.9881091117858887,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            95,
+            423
+          ],
+          [
+            139,
+            423
+          ],
+          [
+            139,
+            443
+          ],
+          [
+            95,
+            443
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "032.jpg",
+    "expected_answer": "BLUE"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "冲锋枪",
+        "confidence": 0.9907843288469614,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            84,
+            400
+          ],
+          [
+            144,
+            400
+          ],
+          [
+            144,
+            424
+          ],
+          [
+            84,
+            424
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "035.jpg",
+    "expected_answer": "冲锋枪"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "15",
+        "confidence": 0.9998728874712458,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            7,
+            430
+          ],
+          [
+            33,
+            430
+          ],
+          [
+            33,
+            448
+          ],
+          [
+            7,
+            448
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "015.jpg",
+    "expected_answer": "15"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "牛",
+        "confidence": 0.992352975163957,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            95,
+            428
+          ],
+          [
+            117,
+            428
+          ],
+          [
+            117,
+            448
+          ],
+          [
+            95,
+            448
+          ]
+        ]
+      }
+    ],
+    "total_detected": 6,
+    "total_masked": 1,
+    "filename": "011.jpg",
+    "expected_answer": "牛"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "69",
+        "confidence": 0.9552402624699475,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            105,
+            419
+          ],
+          [
+            127,
+            419
+          ],
+          [
+            127,
+            437
+          ],
+          [
+            105,
+            437
+          ]
+        ]
+      }
+    ],
+    "total_detected": 6,
+    "total_masked": 1,
+    "filename": "020.jpg",
+    "expected_answer": "869"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "CHINA",
+        "confidence": 0.9925841380698266,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            83,
+            443
+          ],
+          [
+            139,
+            443
+          ],
+          [
+            139,
+            463
+          ],
+          [
+            83,
+            463
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "002.jpg",
+    "expected_answer": "CHNA"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "卡车",
+        "confidence": 0.8407411329445004,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            94,
+            444
+          ],
+          [
+            134,
+            444
+          ],
+          [
+            134,
+            468
+          ],
+          [
+            94,
+            468
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "039.jpg",
+    "expected_answer": "卡车"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "大象",
+        "confidence": 0.9369679618839277,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            99,
+            416
+          ],
+          [
+            137,
+            416
+          ],
+          [
+            137,
+            436
+          ],
+          [
+            99,
+            436
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "027.jpg",
+    "expected_answer": "大象"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "GREEN",
+        "confidence": 0.999627074246489,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            86,
+            417
+          ],
+          [
+            144,
+            417
+          ],
+          [
+            144,
+            441
+          ],
+          [
+            86,
+            441
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "034.jpg",
+    "expected_answer": "GREEN"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "326",
+        "confidence": 0.9993062710514007,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            91,
+            396
+          ],
+          [
+            121,
+            396
+          ],
+          [
+            121,
+            416
+          ],
+          [
+            91,
+            416
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "003.jpg",
+    "expected_answer": "326"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "山羊",
+        "confidence": 0.9306057115162728,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            103,
+            452
+          ],
+          [
+            141,
+            452
+          ],
+          [
+            141,
+            472
+          ],
+          [
+            103,
+            472
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "043.jpg",
+    "expected_answer": "羊"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "UN",
+        "confidence": 0.9989328400629003,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            87,
+            374
+          ],
+          [
+            117,
+            374
+          ],
+          [
+            117,
+            394
+          ],
+          [
+            87,
+            394
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "005.jpg",
+    "expected_answer": "UN"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "53",
+        "confidence": 0.9999885360764513,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            7,
+            375
+          ],
+          [
+            31,
+            375
+          ],
+          [
+            31,
+            395
+          ],
+          [
+            7,
+            395
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "053.jpg",
+    "expected_answer": "五角星"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "ESWN",
+        "confidence": 0.9956669807434082,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            94,
+            358
+          ],
+          [
+            148,
+            358
+          ],
+          [
+            148,
+            382
+          ],
+          [
+            94,
+            382
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "060.jpg",
+    "expected_answer": "ESWN"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "HELP",
+        "confidence": 0.9873371720314026,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            101,
+            429
+          ],
+          [
+            145,
+            429
+          ],
+          [
+            145,
+            449
+          ],
+          [
+            101,
+            449
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "046.jpg",
+    "expected_answer": "HELP"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "骆驼",
+        "confidence": 0.6722477933503982,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            98,
+            435
+          ],
+          [
+            136,
+            435
+          ],
+          [
+            136,
+            459
+          ],
+          [
+            98,
+            459
+          ]
+        ]
+      }
+    ],
+    "total_detected": 6,
+    "total_masked": 1,
+    "filename": "029.jpg",
+    "expected_answer": "骆驼"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "6890",
+        "confidence": 0.9474743008613586,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            97,
+            419
+          ],
+          [
+            139,
+            419
+          ],
+          [
+            139,
+            439
+          ],
+          [
+            97,
+            439
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "028.jpg",
+    "expected_answer": "6890"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "熊",
+        "confidence": 0.9854556185354255,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            116,
+            439
+          ],
+          [
+            140,
+            439
+          ],
+          [
+            140,
+            463
+          ],
+          [
+            116,
+            463
+          ]
+        ]
+      }
+    ],
+    "total_detected": 6,
+    "total_masked": 1,
+    "filename": "041.jpg",
+    "expected_answer": "熊"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "19",
+        "confidence": 0.9998536692779824,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            9,
+            416
+          ],
+          [
+            35,
+            416
+          ],
+          [
+            35,
+            434
+          ],
+          [
+            9,
+            434
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "019.jpg",
+    "expected_answer": "19"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "13",
+        "confidence": 0.999965945516241,
+        "region_name": "left_side",
+        "bbox": [
+          [
+            9,
+            443
+          ],
+          [
+            33,
+            443
+          ],
+          [
+            33,
+            461
+          ],
+          [
+            9,
+            461
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "013.jpg",
+    "expected_answer": "13"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "4234",
+        "confidence": 0.9999983310699463,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            83,
+            371
+          ],
+          [
+            125,
+            371
+          ],
+          [
+            125,
+            391
+          ],
+          [
+            83,
+            391
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "014.jpg",
+    "expected_answer": "4234"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "射炮",
+        "confidence": 0.9741685641553253,
+        "region_name": "bottom_center",
+        "bbox": [
+          [
+            100,
+            442
+          ],
+          [
+            142,
+            442
+          ],
+          [
+            142,
+            466
+          ],
+          [
+            100,
+            466
+          ]
+        ]
+      }
+    ],
+    "total_detected": 9,
+    "total_masked": 1,
+    "filename": "037.jpg",
+    "expected_answer": "高射炮"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "62/58",
+        "confidence": 0.9251045974610609,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            103,
+            370
+          ],
+          [
+            151,
+            370
+          ],
+          [
+            151,
+            390
+          ],
+          [
+            103,
+            390
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "054.jpg",
+    "expected_answer": "62"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "986",
+        "confidence": 0.9966501200977885,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            89,
+            381
+          ],
+          [
+            119,
+            381
+          ],
+          [
+            119,
+            399
+          ],
+          [
+            89,
+            399
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "016.jpg",
+    "expected_answer": "986"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "45/38",
+        "confidence": 0.9984552848706524,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            97,
+            361
+          ],
+          [
+            147,
+            361
+          ],
+          [
+            147,
+            381
+          ],
+          [
+            97,
+            381
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "057.jpg",
+    "expected_answer": "/"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "45",
+        "confidence": 0.833137952856968,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            11,
+            396
+          ],
+          [
+            37,
+            396
+          ],
+          [
+            37,
+            416
+          ],
+          [
+            11,
+            416
+          ]
+        ]
+      }
+    ],
+    "total_detected": 4,
+    "total_masked": 1,
+    "filename": "045.jpg",
+    "expected_answer": "45"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "骆驼/",
+        "confidence": 0.43844412699429103,
+        "region_name": "left_bottom_large",
+        "bbox": [
+          [
+            90,
+            388
+          ],
+          [
+            158,
+            388
+          ],
+          [
+            158,
+            412
+          ],
+          [
+            90,
+            412
+          ]
+        ]
+      }
+    ],
+    "total_detected": 5,
+    "total_masked": 1,
+    "filename": "055.jpg",
+    "expected_answer": "骆驼"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "25",
+        "confidence": 0.9999869345019613,
+        "region_name": "left_bottom",
+        "bbox": [
+          [
+            109,
+            373
+          ],
+          [
+            133,
+            373
+          ],
+          [
+            133,
+            393
+          ],
+          [
+            109,
+            393
+          ]
+        ]
+      }
+    ],
+    "total_detected": 8,
+    "total_masked": 1,
+    "filename": "059.jpg",
+    "expected_answer": "25"
+  },
+  {
+    "success": true,
+    "masked_regions": [
+      {
+        "text": "809",
+        "confidence": 0.9969690586147103,
+        "region_name": "full_bottom",
+        "bbox": [
+          [
+            101,
+            429
+          ],
+          [
+            131,
+            429
+          ],
+          [
+            131,
+            447
+          ],
+          [
+            101,
+            447
+          ]
+        ]
+      }
+    ],
+    "total_detected": 7,
+    "total_masked": 1,
+    "filename": "018.jpg",
+    "expected_answer": "809"
+  }
+]
